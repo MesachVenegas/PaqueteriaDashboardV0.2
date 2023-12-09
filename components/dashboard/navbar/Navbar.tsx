@@ -7,7 +7,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between items-center bg-slate-200/70 dark:bg-slate-700 rounded-lg p-3">
+    <nav className="flex justify-between items-center bg-slate-200 shadow-xl dark:bg-slate-700 rounded-lg p-3 sticky top-0 z-50">
       <div className="capitalize font-bold text-2xl">
         {pathname.split('/').pop()}
       </div>
