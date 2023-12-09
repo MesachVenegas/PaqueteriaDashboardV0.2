@@ -39,7 +39,10 @@ export default function Sidebar() {
                   <li key={index} className="">
                     <Link
                       href={option.url}
-                      className={`flex w-full h-full gap-2 px-3 py-2 rounded-md text-sm font-medium  hover:bg-blue-400/60 dark:hover:bg-yellow-500/90 dark:hover:text-black hover:text-black ${pathname === option.url ? 'bg-blue-500/80 dark:bg-yellow-500 dark:text-black text-white' : 'text-gray-600 dark:text-gray-200'}`}
+                      className={
+                        `flex w-full h-full gap-2 px-3 py-2 rounded-md text-sm font-medium  hover:bg-blue-400/60 dark:hover:bg-yellow-500/90 dark:hover:text-black hover:text-black transition-all duration-300 ease-in-out
+                        ${pathname === option.url ? 'bg-blue-500/80 dark:bg-yellow-500 dark:text-black text-white' : 'text-gray-600 dark:text-gray-200'}`
+                      }
                     >
                       <FontAwesomeIcon  icon={option.icon} className="w-5 h-5"/>
                       {option.title}
@@ -52,8 +55,8 @@ export default function Sidebar() {
         ))
       }
       {/* menu de sesion y tema */}
-      <div className="flex flex-grow items-end p-4">
-        <ul className="flex justify-between items-center w-full gap-4">
+      <div className="flex flex-grow w-full items-end p-4">
+        <ul className="flex justify-between items-center w-full px-4 gap-4">
           <li className="">
             <button className="flex gap-2 text-sm font-medium text-gray-600 dark:text-gray-200 p-2 rounded-md hover:bg-slate-900 dark:hover:bg-slate-200 hover:text-white dark:hover:text-black">
               <FontAwesomeIcon  icon={faMoon} className="w-5 h-5"/>
