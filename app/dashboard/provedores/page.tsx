@@ -15,7 +15,7 @@ export default function Providers() {
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
         <SearchBar placeholder="Buscar un provedor..." />
-        <Button text="Agregar proveedor" icon={faUserPlus} />
+        <Button type='link' source='/dashboard/provedores/create' text="Agregar proveedor" icon={faUserPlus} />
       </div>
       <div className="flex flex-col">
         <ProvidersTable />
