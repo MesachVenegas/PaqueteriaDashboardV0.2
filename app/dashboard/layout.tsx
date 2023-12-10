@@ -1,6 +1,12 @@
+import { Metadata } from "next";
 import Footer from "@/components/dashboard/footer/Footer";
 import Navbar from "@/components/dashboard/navbar/Navbar";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
+
+export const metadata: Metadata = {
+  title: 'Dashboard | Paqueteria 5 Estrellas',
+  description: 'Dashboard App home page',
+}
 
 export default function layout({ children } : {children: React.ReactNode}) {
   return (
