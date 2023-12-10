@@ -12,6 +12,7 @@ import {
   Text,
   Title,
 } from "@tremor/react";
+import Link from "next/link";
 
 const data = [
   {
@@ -113,10 +114,10 @@ export default function ClientsTable() {
                   04/12/2023
               </TableCell>
               <TableCell className="flex gap-8 items-center font-semibold">
-                <span className="flex items-center gap-2 text-blue-500 hover:text-blue-600 cursor-pointer">
+                <Link href='/dashboard/clientes/view' className="flex items-center gap-2 text-blue-500 hover:text-blue-600 cursor-pointer">
                   <FontAwesomeIcon icon={faEye} className="w-4 h-4" />
                   Ver
-                </span>
+                </Link>
                 <span className="flex items-center gap-2 text-green-500 hover:text-green-600 cursor-pointer">
                   <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
                   Editar
