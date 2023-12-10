@@ -3,7 +3,7 @@ import { inter } from '@/app/ui/fonts'
 import './ui/globals.css'
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Paqueteria 5 Estrellas',
   description: 'Dashboard App home page',
 }
 
