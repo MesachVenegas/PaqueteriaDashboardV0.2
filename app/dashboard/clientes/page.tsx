@@ -2,7 +2,8 @@ import { Metadata } from 'next'
 import ClientsTable from "@/components/dashboard/tables/ClientsTable";
 import Pagination from "@/components/dashboard/pagination/Pagination";
 import SearchBar from "@/components/dashboard/search/SearchBar";
-import AddNewClient from '@/components/dashboard/clients/addClient/AddNewClient';
+import Button from '@/components/dashboard/button/Button';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function Clients() {
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
         <SearchBar placeholder="Buscar un cliente..." />
-        <AddNewClient />
+        <Button type='link' source='/dashboard/clientes/create' text="Agregar Cliente" icon={faUserPlus} />
       </div>
       <div className="flex flex-col">
         <ClientsTable />
