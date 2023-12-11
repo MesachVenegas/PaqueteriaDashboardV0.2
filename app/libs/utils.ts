@@ -1,3 +1,4 @@
+import { faBlackTie } from "@fortawesome/free-brands-svg-icons";
 import { faCashRegister, faDollarSign, faFileInvoiceDollar, faGear, faHandHoldingHeart, faLayerGroup, faLifeRing, faMoneyBillTransfer, faRankingStar, faTruckFast, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 export const menuLinks = [
@@ -24,6 +25,7 @@ export const menuLinks = [
     title: "Usuario",
     links: [
       { title: "Ajustes", url: "/dashboard/ajustes" , icon: faGear},
+      { title: "Admin", url: "/dashboard/admin" , icon: faBlackTie},
       { title: "Ayuda", url: "/dashboard/ayuda" , icon: faLifeRing},
     ]
   },
