@@ -27,6 +27,31 @@ export async function getClients(search: string, page: number) {
 }
 
 
+export async function getUsers(search: string, page: number) {
+  const usersPerPage = 6;
+
+  try {
+    const count = await prisma.user.count()
+    const users = await prisma.user.findMany({
+      where: {
+        OR: [
+          { name: { contains: search } },
+          { last_name: { contains: search } },
+          { username: { contains: search } },
+        ]
+      },
+      take: usersPerPage,
+      skip: (page - 1) * usersPerPage,
+    });
+    if (users.length === 0) return [];
+    return { users, count };
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error al obtener los usuarios');
+  }
+}
+
+
 export async function getClient(id: string) {
   try {
     const client = await prisma.client.findUnique({
