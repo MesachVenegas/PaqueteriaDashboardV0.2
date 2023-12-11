@@ -17,7 +17,7 @@ export default function SearchBar({ placeholder} : {placeholder: string} ) {
   const handleSearch = useDebouncedCallback((data: string) => {
     params.set('page', '1');
     if(data){
-      data.length > 2 && params.set('search', data);
+      data.length > 1 && params.set('search', data);
     }else {
       params.delete('search');
     }
