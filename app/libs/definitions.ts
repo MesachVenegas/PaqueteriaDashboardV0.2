@@ -1,3 +1,4 @@
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export interface UserProps {
   id: string;
@@ -19,6 +20,7 @@ export interface ClientProps {
   type: 'minors' | 'wholesaler';
   registerAt: Date;
   updateAt: Date;
+  orders?: OrderProps[];
 }
 
 export interface OrderProps {
@@ -26,7 +28,7 @@ export interface OrderProps {
   client_id: string;
   seller_id: string;
   addresses: string;
-  bill_id: string;
+  bill_id: number;
   total: number;
   payment_type: 'cash' | 'card' | 'transfer' | 'partial';
   type: 'land' | 'air';
@@ -50,4 +52,13 @@ export interface OtherBillProps {
   mount: number;
   registerAt: Date;
   updateAt: Date;
+}
+
+export type ButtonProps = {
+  text: string;
+  type: 'link' | 'button';
+  source?: string;
+  icon?: IconDefinition;
+  color?: 'slate' | 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'white' | 'black' | 'transparent' | 'emerald';
+  action?: () => void;
 }
