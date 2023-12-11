@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { inter } from '@/app/ui/fonts'
 import './ui/globals.css'
+import ProgressBarProvider from './ui/progressBar/ProgresBar'
 
 export const metadata: Metadata = {
   title: 'Paqueteria 5 Estrellas',
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.className} transition-all duration-300 ease-in-out`}>
-        {children}
+        <ProgressBarProvider>
+          {children}
+        </ProgressBarProvider>
       </body>
     </html>
   )
