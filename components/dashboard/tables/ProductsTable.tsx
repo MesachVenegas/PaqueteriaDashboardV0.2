@@ -77,6 +77,7 @@ export default function ProductsTable() {
             <TableHeaderCell>Tipo</TableHeaderCell>
             <TableHeaderCell>Costo</TableHeaderCell>
             <TableHeaderCell>Registro</TableHeaderCell>
+            <TableHeaderCell>Actualizado</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,6 +95,9 @@ export default function ProductsTable() {
               </TableCell>
               <TableCell>
                 02/12/2023
+              </TableCell>
+              <TableCell>
+                12/12/2023
               </TableCell>
               <TableCell className="flex gap-4 items-center font-semibold">
                 <span className="flex items-center gap-2 text-green-500 hover:text-green-600 cursor-pointer">
