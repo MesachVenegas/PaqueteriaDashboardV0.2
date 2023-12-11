@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("MYSQL_PRISMA_URL")
+}
+
+
+// Tabla con el registro de usuarios del dashboard
+model User {
+  id String @id @default(uuid())
+  avatar String?
+  username String @unique
+  name String
+  last_name String
+  password String
+  is_admin Boolean @default(false)
+  orders Order[]
+}
+
+// Tabla con el registro de los clientes de la empresa
+model Client {
+  id String @id @default(uuid())
+  avatar String? @default("/assets/default-avatar.png")
+  name String
+  last_name String
+  email String? @unique
+  phone String @unique
+  address String
+  type TypeClient @default(minors)
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  orders Order[]
+}
+// Tabla con el registro de los proveedores de la empresa
+model Providers {
+  id String @id @default(uuid())
+  avatar String? @default("/assets/logo.jpg")
+  name String
+  email String? @unique
+  phone String @unique
+  address String?
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  otherBills OtherBills[]
+}
+
+// Tabla donde se almacena la informacion de las ordenes generadas
+model Order {
+  id String @id @default(uuid())
+  client Client @relation(fields: [client_id], references: [id])
+  client_id String
+  seller User @relation(fields: [seller_id], references: [id])
+  seller_id String
+  addresses String
+  bill Bills @relation(fields: [bill_id], references: [id])
+  bill_id Int
+  total Float
+  type Delivery @default(land)
+  payment_type Payment @default(cash)
+  is_complete Boolean
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+// Tabla donde se almacena la informacion de las facturas generadas por ventas
+model Bills {
+  id Int @id @default(autoincrement())
+  url String
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  order Order[]
+}
+
+// Tabla donde se almacena la informacion de las facturas generadas por gastos
+model OtherBills {
+  id String @id @default(uuid())
+  name String
+  description String
+  provider Providers @relation(fields: [provider_id], references: [id])
+  provider_id String
+  mount Float @default(0)
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+// Prices model donde se almacenan la lista de costos por tipos de envio en base al peso.
+model Price {
+  id Int @id @default(autoincrement())
+  weight Float @default(1)
+  price Float
+  delivery Delivery
+  registerAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+// Tipos de pagos permitidos
+enum Payment {
+  cash
+  card
+  transfer
+  partial
+}
+
+// Tipos de envios permitidos
+enum Delivery {
+  land
+  air
+}
+
+enum TypeClient {
+  wholesaler
+  minors
+}
