@@ -63,3 +63,12 @@ export type ButtonProps = {
   color?: 'slate' | 'blue' | 'red' | 'green' | 'yellow' | 'gray' | 'white' | 'black' | 'transparent' | 'emerald';
   action?: () => void;
 }
+
+export interface SessionProps {
+  user: {
+    username:string;
+    name: string;
+    image: string;
+    is_admin: boolean;
+  }
+}
