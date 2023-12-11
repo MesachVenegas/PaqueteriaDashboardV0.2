@@ -75,7 +75,6 @@ export default function ProvidersTable() {
             <TableHeaderCell>Nombre</TableHeaderCell>
             <TableHeaderCell>Teléfono</TableHeaderCell>
             <TableHeaderCell>Email</TableHeaderCell>
-            <TableHeaderCell>Tipo</TableHeaderCell>
             <TableHeaderCell>Registro</TableHeaderCell>
           </TableRow>
         </TableHead>
@@ -87,12 +86,7 @@ export default function ProvidersTable() {
                 <Text>{item.Role}</Text>
               </TableCell>
               <TableCell>
-                <Text>{item.departement}</Text>
-              </TableCell>
-              <TableCell>
-                {/* <Badge color="emerald" icon={StatusOnlineIcon}> */}
-                  {item.status}
-                {/* </Badge> */}
+                <Text>example@example.com</Text>
               </TableCell>
               <TableCell>
                 02/12/2023
