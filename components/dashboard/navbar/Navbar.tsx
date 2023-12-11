@@ -3,11 +3,12 @@
 import { faBell, faComment, faEarthAmerica, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation"
+
 export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between items-center bg-slate-200 shadow-xl dark:bg-slate-700 rounded-lg p-3 sticky top-0 z-50">
+    <nav className="flex justify-between items-center bg-slate-200 dark:bg-slate-700 rounded-lg p-3">
       <div className="capitalize font-bold text-2xl">
         {pathname.split('/').pop()}
       </div>
