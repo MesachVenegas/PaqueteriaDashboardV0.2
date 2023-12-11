@@ -10,10 +10,10 @@ export default function Pagination({ count } : { count: number }) {
   const { replace } = useRouter();
   const page = searchParams.get('page') || '1';
   const params = new URLSearchParams(searchParams);
-  const itemPerPage = 1;
+  const itemPerPage = 8;
 
   const hasPrev = itemPerPage * (parseInt(page) - 1) > 0;
-  const hasNext = itemPerPage * (parseInt(page) - 1) + itemPerPage < count -1;
+  const hasNext = itemPerPage * (parseInt(page) - 1) + itemPerPage < count;
 
   const handlePage = (type: string) => {
     type === 'prev'
