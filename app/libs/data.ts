@@ -1,5 +1,4 @@
 import prisma from "./prisma";
-import { ClientProps } from '@/app/libs/definitions';
 import { Prisma } from "@prisma/client";
 
 
@@ -27,23 +26,21 @@ export async function getClients(search: string, page: number) {
   }
 }
 
-export async function createNewClient(data: ClientProps) {
-  const { name, last_name, phone, address, type, avatar, email } = data;
-  try {
-    const newClient = await prisma.client.create({
-      data: {
-        avatar: avatar ? avatar : '',
-        name: name,
-        last_name: last_name,
-        phone: phone,
-        address: address,
-        email: email,
-        type: type,
-      }
-    });
 
-    return newClient;
+export async function getClient(id: string) {
+  try {
+    const client = await prisma.client.findUnique({
+      where: { id },
+      include: {
+        orders: {
+          where: { client_id: id }
+        },
+      },
+    });
+    if (!client) return [];
+    return client;
   } catch (error) {
     console.log(error);
+    throw new Error('Error al obtener el cliente');
   }
 }
