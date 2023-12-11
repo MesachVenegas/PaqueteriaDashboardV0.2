@@ -6,13 +6,12 @@ import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { menuLinks } from "@/app/libs/utils";
 import { faMoon, faPersonWalkingArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { auth } from "@/app/auth";
+import { SessionProps } from "@/app/libs/definitions";
 
 
-export default function Sidebar({ closeSession, userSignIn } : {closeSession: () => void , userSignIn: { user: { name: string }} } ) {
+export default function Sidebar({ closeSession, userSignIn } : {closeSession: () => void , userSignIn: SessionProps } ) {
   const pathname = usePathname();
   const { user } = userSignIn;
-
   console.log(userSignIn);
 
   return (
@@ -28,7 +27,7 @@ export default function Sidebar({ closeSession, userSignIn } : {closeSession: ()
         />
         <div className="flex flex-col gap-1">
           <p className="text-sm font-medium">{user.name}</p>
-          <p className="text-xs">Rol del Usuario</p>
+          <p className="text-xs">{ user.is_admin ? "Administrador": "Usuario"}</p>
         </div>
       </div>
       {
