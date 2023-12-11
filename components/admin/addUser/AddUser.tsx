@@ -4,15 +4,19 @@ import { useState } from 'react';
 import Button from '@/components/dashboard/button/Button'
 import SearchBar from '@/components/dashboard/search/SearchBar'
 import { faUser, faUserPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createNewUser } from '@/app/libs/actions';
+import { revalidatePath } from 'next/cache';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 
-export default function AddUser() {
+export default function AddUser({ handleForm }: { handleForm: (data: Iterable<readonly [PropertyKey, any]>) => void}) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleUserForm = async ( dataForm: Iterable<readonly [PropertyKey, any]>) => {
-    console.log(dataForm);
+  const createNewUser = async (data: Iterable<readonly [PropertyKey, any]>) => {
+    await handleForm(data);
+    setIsOpen(false);
   }
+
 
   return (
     <>
@@ -31,7 +35,18 @@ export default function AddUser() {
                 <FontAwesomeIcon icon={faXmark} className='w-5 h-6' />
               </span>
               <h2 className='text-xl'>Agregar Usuario</h2>
-              <form action={handleUserForm} className='flex flex-col w-full max-w-lg gap-4 px-6'>
+              <form action={createNewUser} className='flex flex-col w-full max-w-lg gap-4 px-6'>
+                <div className='flex justify-between'>
+                  <label className='w-72' htmlFor="name">Usuario:</label>
+                  <input
+                    className='w-full p-1 rounded-md border border-transparent focus:outline-none focus:border-slate-400'
+                    type="text"
+                    name='username'
+                    placeholder='j.doe'
+                    autoFocus
+                    required
+                  />
+                </div>
                 <div className='flex justify-between'>
                   <label className='w-72' htmlFor="name">Nombre(s):</label>
                   <input
@@ -39,7 +54,6 @@ export default function AddUser() {
                     type="text"
                     name='name'
                     placeholder='John'
-                    autoFocus
                     required
                   />
                 </div>
