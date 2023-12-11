@@ -3,6 +3,7 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 export interface UserProps {
   id: string;
   avatar: string;
+  name: string;
   username: string;
   last_name: string;
   password: string;
