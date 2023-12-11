@@ -1,6 +1,7 @@
 {
-  "name": "dashboard_template",
-  "version": "0.1.0",
+  "name": "paqueteria_5_estrellas_dashboard",
+  "version": "0.2.0",
+  "author": "Mesach Venegas",
   "private": true,
   "scripts": {
     "dev": "next dev",
