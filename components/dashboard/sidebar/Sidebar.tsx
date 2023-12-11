@@ -3,14 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { menuLinks } from "@/app/libs/utils";
 import { faMoon, faPersonWalkingArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { auth } from "@/app/auth";
 
 
-export default function Sidebar() {
+export default function Sidebar({ closeSession, userSignIn } : {closeSession: () => void , userSignIn: { user: { name: string }} } ) {
   const pathname = usePathname();
+  const { user } = userSignIn;
+
+  console.log(userSignIn);
 
   return (
     <div className="flex flex-col w-64 justify-start items-start h-full bg-slate-200 dark:bg-slate-950 dark:text-white shadow-xl">
@@ -24,7 +27,7 @@ export default function Sidebar() {
           height={38}
         />
         <div className="flex flex-col gap-1">
-          <p className="text-sm font-medium">Nombre de Usuario</p>
+          <p className="text-sm font-medium">{user.name}</p>
           <p className="text-xs">Rol del Usuario</p>
         </div>
       </div>
@@ -64,10 +67,12 @@ export default function Sidebar() {
             </button>
           </li>
           <li className="">
-            <button className="flex gap-2 text-sm font-medium text-gray-600 dark:text-gray-200 p-2 rounded-md hover:bg-red-600  hover:text-white">
-              <FontAwesomeIcon  icon={faPersonWalkingArrowRight} className="w-5 h-5"/>
-              Salir
-            </button>
+            <form action={closeSession}>
+              <button className="flex gap-2 text-sm font-medium text-gray-600 dark:text-gray-200 p-2 rounded-md hover:bg-red-600  hover:text-white">
+                <FontAwesomeIcon  icon={faPersonWalkingArrowRight} className="w-5 h-5"/>
+                Salir
+              </button>
+            </form>
           </li>
         </ul>
       </div>
