@@ -7,6 +7,8 @@ import Button from '@/components/dashboard/button/Button';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { getClients } from '@/app/libs/data';
 import { ClientProps } from '@/app/libs/definitions';
+import { deleteClient as RemoveClient } from '@/app/libs/actions';
+import { revalidatePath } from 'next/cache';
 
 
 export const metadata: Metadata = {
@@ -20,6 +22,13 @@ export default async function Clients({ searchParams }: { searchParams: { search
   const response = await getClients(search, parseInt(page));
   const { count, clients } = Array.isArray(response) ? { count: 0, clients: [] } : response;
 
+  const deleteClient = async (id: string) => {
+    'use server'
+    await RemoveClient(id)
+      .then( () => revalidatePath('/dashboard/clientes'))
+      .catch( (error) => console.log(error));
+  }
+
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
@@ -28,7 +37,7 @@ export default async function Clients({ searchParams }: { searchParams: { search
       </div>
       <div className="flex flex-col">
         <Suspense fallback={<span>Cargando...</span>}>
-          <ClientsTable data={clients as ClientProps[]} />
+          <ClientsTable data={clients as ClientProps[]} removeClient={deleteClient} />
         </Suspense>
         <Pagination count={count}/>
       </div>
