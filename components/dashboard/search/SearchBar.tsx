@@ -5,14 +5,11 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDebouncedCallback } from 'use-debounce';
 
-
 export default function SearchBar({ placeholder} : {placeholder: string} ) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-
   const params = new URLSearchParams(searchParams);
-
 
   const handleSearch = useDebouncedCallback((data: string) => {
     params.set('page', '1');
