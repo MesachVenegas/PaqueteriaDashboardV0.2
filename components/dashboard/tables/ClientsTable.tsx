@@ -27,16 +27,15 @@ export default function ClientsTable({ data, removeClient } : {data: ClientProps
         <TableBody>
           {
             data.map((item : ClientProps ) => (
-              <TableRow key={item.name} className="hover:bg-slate-200">
+              <TableRow key={item.name} className="hover:bg-slate-200 text-gray-700">
                 <TableCell>{item.name} {item.last_name}</TableCell>
                 <TableCell>
                   {item.phone}
                 </TableCell>
                 <TableCell>
-                  <Text>{item.email}</Text>
+                  {item.email}
                 </TableCell>
                 <TableCell>
-                  <Text>
                     {
                       item.type === "minors"
                       ? (
@@ -52,10 +51,9 @@ export default function ClientsTable({ data, removeClient } : {data: ClientProps
                         </span>
                       )
                     }
-                  </Text>
                 </TableCell>
                 <TableCell>
-                    <Text>{format(item.registerAt, "dd/MM/yyyy hh:mm b")}</Text>
+                    {format(item.registerAt, "dd/MM/yyyy hh:mm b")}
                 </TableCell>
                 <TableCell className="flex gap-8 items-center font-semibold">
                   <Link href={`/dashboard/clientes/${item.id}`} className="flex items-center gap-2 text-blue-500 hover:text-blue-600 cursor-pointer">
