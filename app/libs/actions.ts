@@ -99,13 +99,7 @@ export async function authenticate(data: Iterable<readonly [PropertyKey, any]>) 
   const { username, password } = Object.fromEntries(data);
 
   try {
-    await signIn('credentials', {
-        username,
-        password,
-        redirect: false,
-      }
-    )
-
+    await signIn('credentials', { username, password })
   } catch (error) {
     throw error;
   }
