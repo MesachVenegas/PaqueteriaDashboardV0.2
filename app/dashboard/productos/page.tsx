@@ -1,3 +1,5 @@
+import { getProducts } from '@/app/libs/data'
+import { ProductProps } from '@/app/libs/definitions'
 import Button from '@/components/dashboard/button/Button'
 import Pagination from '@/components/dashboard/pagination/Pagination'
 import SearchBar from '@/components/dashboard/search/SearchBar'
@@ -11,16 +13,21 @@ export const metadata: Metadata = {
 }
 
 
-export default function Products() {
+export default async function Products({ searchParams }: { searchParams: { search: string, page: string }}) {
+  const search = searchParams?.search || '';
+  const page = searchParams?.page || '1';
+  const response = await getProducts(parseInt(page), search);
+  const { countProducts, products } = Array.isArray(response) ? { countProducts: 0, products: [] } : response;
+
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
         <SearchBar placeholder="Buscar un producto..." />
-        <Button text="Agregar producto" icon={faBoxesPacking} />
+        <Button text="Agregar producto" icon={faBoxesPacking}  type='button'/>
       </div>
       <div className="flex flex-col">
-        <ProductsTable />
-        <Pagination />
+        <ProductsTable products={products as ProductProps[]} />
+        <Pagination count={countProducts} />
       </div>
     </div>
   )
