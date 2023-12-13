@@ -1,12 +1,10 @@
-import { getClients } from '@/app/libs/data';
+import { Metadata } from 'next'
+import { getClients, getProducts } from '@/app/libs/data';
 import { ClientProps } from '@/app/libs/definitions';
 import Button from '@/components/dashboard/button/Button';
-import Pagination from '@/components/dashboard/pagination/Pagination';
-import ClientSaleTable from '@/components/dashboard/sales/ClientSaleTable'
-import SaleForm from '@/components/dashboard/sales/SaleFomr';
+import ClientSalePoint from '@/components/dashboard/sales/clientSale/ClientSalePoint';
 import SearchBar from '@/components/dashboard/search/SearchBar'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Ventas | Paqueteria 5 Estrellas',
@@ -18,6 +16,9 @@ export default async function Sales({ searchParams }: { searchParams: { search: 
   const page = searchParams?.page || '1';
   const response = await getClients(search, parseInt(page));
   const { count, clients } = Array.isArray(response) ? { count: 0, clients: [] } : response;
+  const responseProducts = await getProducts(parseInt(page), search);
+  const { products, countProducts } = Array.isArray(responseProducts) ? { countProducts: 0, products: [] } : responseProducts;
+
 
   return (
     <div className='flex flex-col gap-4  p-6'>
@@ -25,14 +26,8 @@ export default async function Sales({ searchParams }: { searchParams: { search: 
         <SearchBar placeholder='Buscar un Cliente' />
         <Button text='Agregar Cliente' icon={faUserPlus} type='button' />
       </div>
-      <div className='flex gap-4'>
-        <div className='flex flex-col gap-4 max-w-md w-full'>
-          <ClientSaleTable data={clients as ClientProps[]}/>
-          <Pagination count={count} />
-        </div>
-        <div>
-          <SaleForm />
-        </div>
+      <div className='flex flex-col xl:flex-row gap-4'>
+        <ClientSalePoint clients={clients as ClientProps[]} count={count} prices={products} />
       </div>
     </div>
   )
