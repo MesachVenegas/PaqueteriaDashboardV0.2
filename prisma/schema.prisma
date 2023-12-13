@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("MYSQL_PRISMA_URL")
+  // url      = env("MYSQL_PRISMA_DEV_URL")
 }
 
 
@@ -92,7 +93,8 @@ model OtherBills {
 // Prices model donde se almacenan la lista de costos por tipos de envio en base al peso.
 model Price {
   id Int @id @default(autoincrement())
-  weight Float @default(1)
+  name String
+  description String
   price Float
   delivery Delivery
   registerAt DateTime @default(now())
