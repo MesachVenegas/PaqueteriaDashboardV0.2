@@ -19,7 +19,7 @@ export default function Providers() {
       </div>
       <div className="flex flex-col">
         <ProvidersTable />
-        <Pagination />
+        <Pagination  count={0}/>
       </div>
     </div>
   )
