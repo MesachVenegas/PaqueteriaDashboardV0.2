@@ -63,7 +63,7 @@ export const { signIn, signOut, auth } = NextAuth({
             ...session.user,
             name: token.name,
             image: token.picture,
-            is_admin: token.rol
+            // is_admin: token.rol,
           };
         }
       }
