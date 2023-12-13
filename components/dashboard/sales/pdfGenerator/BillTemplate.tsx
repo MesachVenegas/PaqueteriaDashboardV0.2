@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Page, Text, View, Document, Image, StyleSheet } from "@react-pdf/renderer";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { ClientProps } from "@/app/libs/definitions";
 
 const styles = StyleSheet.create({
   page: {
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
 })
 
 
-export default function BillPayment({ data, folio, client, volumetric }) {
+export default function BillPayment({ data, folio, client, volumetric }: { data: any, folio: string, client: ClientProps, volumetric: number }) {
 
 
   return (
