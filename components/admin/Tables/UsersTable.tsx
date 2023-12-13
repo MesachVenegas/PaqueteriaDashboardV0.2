@@ -15,22 +15,16 @@ export default function UsersTable({ data, removeUser }: { data: UserProps[], re
       <Table className="mt-5">
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Usuario</TableHeaderCell>
-            <TableHeaderCell>Nombre</TableHeaderCell>
-            <TableHeaderCell>Rol</TableHeaderCell>
+            <TableHeaderCell className="dark:text-gray-300">Usuario</TableHeaderCell>
+            <TableHeaderCell className="dark:text-gray-300">Nombre</TableHeaderCell>
+            <TableHeaderCell className="dark:text-gray-300">Rol</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((item) => (
-            <TableRow key={item.id} className="hover:bg-slate-200">
-              <TableCell>
-                <Text>
-                  {item.username}
-                </Text>
-              </TableCell>
-              <TableCell>
-                <Text>{item.name} {item.last_name}</Text>
-              </TableCell>
+            <TableRow key={item.id} className="dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-slate-800">
+              <TableCell>{item.username}</TableCell>
+              <TableCell>{item.name} {item.last_name}</TableCell>
               <TableCell>
                   {
                     !item.is_admin
@@ -49,11 +43,11 @@ export default function UsersTable({ data, removeUser }: { data: UserProps[], re
                   }
               </TableCell>
               <TableCell className="flex gap-4 items-center font-semibold">
-                <span className="flex items-center gap-2 text-green-500 hover:text-green-600 cursor-pointer">
+                <span className="flex items-center gap-2 text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-500 cursor-pointer">
                   <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
                   Editar
                 </span>
-                <span className="flex items-center gap-2 text-red-600 hover:text-red-500 cursor-pointer" onClick={() => removeUser(item.id)}>
+                <span className="flex items-center gap-2 text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-500 cursor-pointer" onClick={() => removeUser(item.id)}>
                   <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
                   Eliminar
                 </span>

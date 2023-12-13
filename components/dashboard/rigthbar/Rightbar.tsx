@@ -10,7 +10,7 @@ export default function Rightbar() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="relative flex flex-col w-full p-6 bg-slate-200 rounded-lg">
+      <div className="relative flex flex-col w-full p-6 bg-slate-200 rounded-lg dark:text-gray-100 dark:bg-slate-950">
         <div className="absolute right-4 bottom-1 opacity-80 z-0">
           <Image src='/assets/logo_no_bg.png' width={150} height={150} alt="Logo paqueteria" />
         </div>
