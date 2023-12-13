@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { inter } from '@/app/ui/fonts'
 import './ui/globals.css'
 import ProgressBarProvider from './ui/progressBar/ProgresBar'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'Paqueteria 5 Estrellas',
@@ -19,6 +20,7 @@ export default function RootLayout({
         <ProgressBarProvider>
           {children}
         </ProgressBarProvider>
+        <Analytics />
       </body>
     </html>
   )
