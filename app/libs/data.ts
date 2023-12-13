@@ -69,3 +69,25 @@ export async function getClient(id: string) {
     throw new Error('Error al obtener el cliente');
   }
 }
+
+export async function getProducts(page: number, search: string,) {
+  const productsPerPage = 6;
+
+  try {
+    const countProducts = await prisma.price.count()
+    const products = await prisma.price.findMany({
+      where: {
+        OR: [
+          { name: { contains: search } },
+        ]
+      },
+      take: productsPerPage,
+      skip: (page - 1) * productsPerPage,
+    });
+    if (products.length === 0) return [];
+    return { products: products, countProducts };
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error al obtener los precios');
+  }
+}
