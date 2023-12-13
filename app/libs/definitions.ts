@@ -38,6 +38,17 @@ export interface OrderProps {
   updateAt: Date;
 }
 
+
+export interface ProductProps {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  delivery: 'land' | 'air';
+  registerAt: Date;
+  updateAt: Date;
+}
+
 export interface BillProps {
   id: string;
   url: string;
@@ -65,10 +76,25 @@ export type ButtonProps = {
 }
 
 export interface SessionProps {
-  user: {
-    username:string;
-    name: string;
-    image: string;
-    is_admin: boolean;
-  }
+  name: string;
+  image: string;
+  is_admin?: boolean;
+}
+
+export interface FormSaleProps {
+  name: string;
+  phone: string;
+  street: string;
+  number: string;
+  colony: string;
+  delegation: string;
+  zip_code: string;
+  state: string;
+  references: string;
+  length: string;
+  height: string;
+  width: string;
+  weight: string;
+  send: "Terrestre" | "Aéreo";
+  payment: "Efectivo" | "Tarjeta" | "Transferencia" | "Parcial";
 }
