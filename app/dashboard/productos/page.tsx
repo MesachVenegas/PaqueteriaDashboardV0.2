@@ -1,3 +1,4 @@
+import { deleteProduct } from '@/app/libs/actions'
 import { getProducts } from '@/app/libs/data'
 import { ProductProps } from '@/app/libs/definitions'
 import Button from '@/components/dashboard/button/Button'
@@ -19,15 +20,21 @@ export default async function Products({ searchParams }: { searchParams: { searc
   const response = await getProducts(parseInt(page), search);
   const { countProducts, products } = Array.isArray(response) ? { countProducts: 0, products: [] } : response;
 
+  const delProduct = async (id:number) => {
+    await deleteProduct(id)
+      .catch((err) => console.log(err))
+  }
+
+
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
         <SearchBar placeholder="Buscar un producto..." />
-        <Button text="Agregar producto" icon={faBoxesPacking}  type='button'/>
+        <Button text="Agregar producto" icon={faBoxesPacking}  type='link' source='/dashboard/productos/add'/>
       </div>
       <div className="flex flex-col">
-        <ProductsTable products={products as ProductProps[]} />
-        <Pagination count={countProducts} />
+        <ProductsTable products={products as ProductProps[]} deleteProd={deleteProduct} />
+        <Pagination count={countProducts}  />
       </div>
     </div>
   )
