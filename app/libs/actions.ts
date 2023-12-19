@@ -5,7 +5,11 @@ import { revalidatePath } from "next/cache";
 import prisma from "@/app/libs/prisma";
 import { Prisma } from "@prisma/client";
 import { signIn } from "../auth";
+import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
+import ReactPDF from "@react-pdf/renderer";
+import { PDFData } from "./definitions";
+import BillTemplate from "@/components/dashboard/sales/pdfGenerator/BillTemplate";
 
 export async function createNewClient(data: Iterable<readonly [PropertyKey, any]>) {
   const { name, last_name, phone, address, type, avatar, email } = Object.fromEntries(data);
@@ -24,6 +28,8 @@ export async function createNewClient(data: Iterable<readonly [PropertyKey, any]
     });
 
     if (newClient) {
+      revalidatePath('/dashboard/clientes');
+      revalidatePath('/dashboard/ventas');
       return newClient;
     }
   } catch (error) {
@@ -55,6 +61,7 @@ export async function createNewUser(data: Iterable<readonly [PropertyKey, any]>)
     })
 
     if (newUser) {
+      revalidatePath('/dashboard/admin');
       return newUser;
     }
   } catch (error) {
@@ -100,6 +107,50 @@ export async function authenticate(data: Iterable<readonly [PropertyKey, any]>) 
 
   try {
     await signIn('credentials', { username, password })
+  } catch (error) {
+    if (error instanceof AuthError) {
+      throw new Error(error.cause?.err?.message);
+    }
+    else {
+      throw error;
+    }
+  }
+}
+
+export async function createNewProduct(data: Iterable<readonly [PropertyKey, any]>) {
+  const { name, description, price, delivery } = Object.fromEntries(data);
+
+  try {
+    const newProduct = await prisma.price.create({
+      data: {
+        name: name,
+        description: description,
+        price: Number(price),
+        delivery: delivery,
+      }
+    })
+
+    if (newProduct) {
+      revalidatePath('/dashboard/productos');
+      redirect('/dashboard/productos');
+      return newProduct;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export const deleteProduct = async (id: number) => {
+  try {
+    await prisma.price.delete({
+      where: {
+        id: id
+      }
+    }).then((product) => {
+      revalidatePath('/dashboard/productos');
+      return product;
+    })
   } catch (error) {
     throw error;
   }
