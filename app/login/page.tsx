@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { authenticate } from "../libs/actions";
 import LoginForm from "@/components/login/loginForm/LoginForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const themePreference = typeof window !== 'undefined' ? localStorage.getItem('dark') : 'false';
+  const [errorMessage, setErrorMessage] = useState();
 
   useEffect( () => {
     const body = document.getElementsByTagName('body');
@@ -21,7 +22,10 @@ export default function Login() {
 
   const handleLogin = async (data: Iterable<readonly [PropertyKey, any]>) => {
     await authenticate(data)
-    .catch( (error) => console.log(error) )
+    .catch( (error) => {
+        setErrorMessage(error.message)
+      }
+    )
   }
 
 
@@ -34,9 +38,18 @@ export default function Login() {
         </div>
         <h1 className="text-xl text-center text-gray-700 dark:text-gray-100  mt-8">Iniciar Session</h1>
         <LoginForm handleLogin={handleLogin}/>
-        <div className="border border-red-400 rounded-md p-2 bg-red-300">
-          Errores
-        </div>
+        {
+          errorMessage && (
+            <div className="flex justify-center items-center border border-red-400 rounded-md p-2 bg-red-300">
+              {
+                errorMessage === 'User not found' && "Usuario no encontrado o Incorrecto"
+              }
+              {
+                errorMessage === 'Invalid password' && "Contraseña no valida"
+              }
+            </div>
+          )
+        }
       </div>
     </div>
   )
