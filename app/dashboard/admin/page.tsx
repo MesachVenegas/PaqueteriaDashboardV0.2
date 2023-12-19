@@ -23,7 +23,6 @@ export default async function AdminPage({ searchParams }: { searchParams: { sear
   const handleForm =  async (data: Iterable<readonly [PropertyKey, any]>) => {
     'use server'
     createNewUser(data)
-      .then( () => revalidatePath('/dashboard/admin'))
       .catch( err => console.log(err))
   }
 
