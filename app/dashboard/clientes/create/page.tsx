@@ -1,25 +1,19 @@
-import Image from "next/image"
-import { Metadata } from 'next'
-import { createNewClient } from "@/app/libs/actions"
-import { redirect } from "next/navigation"
-import { revalidatePath } from "next/cache"
-import Button from "@/components/dashboard/button/Button"
+'use client'
 
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { createNewClient } from "@/app/libs/actions";
+import Button from "@/components/dashboard/button/Button";
 
-export const metadata: Metadata = {
-  title: 'Registrar Cliente | Paqueteria 5 Estrellas',
-  description: 'Dashboard App home page',
-}
 
 
 export default function CreateClient() {
+  const router = useRouter();
 
   const handleForm = async (dataForm: Iterable<readonly [PropertyKey, any]>) => {
-    'use server'
     const result = await createNewClient(dataForm);
     if(result) {
-      revalidatePath('/dashboard/clientes');
-      redirect('/dashboard/clientes')
+      router.back();
     }
   }
 
