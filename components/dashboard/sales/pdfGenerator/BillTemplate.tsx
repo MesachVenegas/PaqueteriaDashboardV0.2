@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { Page, Text, View, Document, Image, StyleSheet } from "@react-pdf/renderer";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { ClientProps } from "@/app/libs/definitions";
+import { ClientProps, FormSaleProps } from "@/app/libs/definitions";
+import { valueFormatter } from "@/app/libs/utils";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   page: {
     display: 'flex',
     flexDirection: 'column',
@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     gap: '10px',
-    paddingLeft: '2.5rem',
-    paddingRight: '2.5rem',
+    paddingLeft: '40px',
+    paddingRight: '40px',
   },
   img_container: {
     width: '180px',
@@ -127,8 +127,19 @@ const styles = StyleSheet.create({
 })
 
 
-export default function BillPayment({ data, folio, client, volumetric }: { data: any, folio: string, client: ClientProps, volumetric: number }) {
 
+export default function BillTemplate({ data, folio, client, volumetric, subtotal }: { data: FormSaleProps, folio: string, client: ClientProps, volumetric: number, subtotal: number }) {
+  const paymentMethos = {
+    cash: 'Efectivo',
+    card: 'Tarjeta',
+    transfer: 'Transferencia',
+    partial: 'Parcial'
+  }
+
+  const deliveryType = {
+    land: "Terrestre",
+    air: "Aéreo"
+  }
 
   return (
     <Document>
@@ -156,8 +167,8 @@ export default function BillPayment({ data, folio, client, volumetric }: { data:
           </View>
           <View style={ styles.text }>
             <Text>{format(new Date(), "PPPP", {locale: es })}</Text>
-            <Text>Folio: {folio}</Text>
-            <Text>Pago: {data?.payment}</Text>
+            {/* <Text>Folio: {folio}</Text> */}
+            <Text>Pago: {paymentMethos[data.payment] }</Text>
           </View>
         </View>
 
@@ -211,12 +222,12 @@ export default function BillPayment({ data, folio, client, volumetric }: { data:
         <View style={ styles.package }>
           <View style={ styles.container }>
             <View style={ styles.address }>
-              <Text>Largo: {data?.length} cms</Text>
-              <Text>Ancho: {data?.width} cms</Text>
+              <Text>Largo: {data.length} cms</Text>
+              <Text>Ancho: {data.width} cms</Text>
             </View>
             <View style={ styles.address }>
-              <Text>Alto: {data?.height} cms</Text>
-              <Text>Peso: {data?.weight} kgs</Text>
+              <Text>Alto: {data.height} cms</Text>
+              <Text>Peso: {data.weight} kgs</Text>
             </View>
           </View>
           <View style={ styles.address }>
@@ -250,8 +261,8 @@ export default function BillPayment({ data, folio, client, volumetric }: { data:
           </Text>
         </View>
         <View style={ styles.payment }>
-          <Text>{data.send}</Text>
-          <Text>Total: $0 mxn</Text>
+          <Text>{deliveryType[data.send]}</Text>
+          <Text>Total: {valueFormatter(subtotal)} mxn</Text>
         </View>
         <View style={ styles.social }>
             <View style={ styles.social_item }>
