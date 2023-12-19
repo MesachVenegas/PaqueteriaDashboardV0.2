@@ -1,3 +1,5 @@
+'use client'
+
 import { ProductProps } from "@/app/libs/definitions";
 import { valueFormatter } from "@/app/libs/utils";
 import { faEdit, faPlaneDeparture, faTrash, faTruck } from "@fortawesome/free-solid-svg-icons";
@@ -5,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from "@tremor/react";
 import { format } from "date-fns";
 
-export default function ProductsTable({ products } : { products: ProductProps[]} ) {
+export default function ProductsTable({ products, deleteProd } : { products: ProductProps[], deleteProd: (id:number)=> void} ) {
 
   return(
     <Card>
@@ -59,7 +61,10 @@ export default function ProductsTable({ products } : { products: ProductProps[]}
                   <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
                   Editar
                 </span>
-                <span className="flex items-center gap-2 text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-500 cursor-pointer">
+                <span
+                  className="flex items-center gap-2 text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-500 cursor-pointer"
+                  onClick={() => deleteProd(item.id)}
+                >
                   <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
                   Eliminar
                 </span>
