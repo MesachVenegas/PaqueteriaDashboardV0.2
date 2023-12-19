@@ -24,7 +24,7 @@ export default async function Sales({ searchParams }: { searchParams: { search: 
     <div className='flex flex-col gap-4  p-6'>
       <div className='flex w-full justify-between'>
         <SearchBar placeholder='Buscar un Cliente' />
-        <Button text='Agregar Cliente' icon={faUserPlus} type='button' />
+        <Button source='/dashboard/clientes/create' text='Agregar Cliente' icon={faUserPlus} type='link' />
       </div>
       <div className='flex flex-col xl:flex-row gap-4'>
         <ClientSalePoint clients={clients as ClientProps[]} count={count} prices={products} />
