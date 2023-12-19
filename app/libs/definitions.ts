@@ -95,6 +95,26 @@ export interface FormSaleProps {
   height: string;
   width: string;
   weight: string;
-  send: "Terrestre" | "Aéreo";
-  payment: "Efectivo" | "Tarjeta" | "Transferencia" | "Parcial";
+  send: "land" | "air";
+  payment: "cash" | "card" | "transfer" | "partial";
+}
+
+
+export type FormProduct = {
+  name: string;
+  description: string;
+  price: number;
+  delivery: 'land' | 'air';
+}
+
+export interface PDFData {
+  data: FormSaleProps | {};
+  folio: string;
+  client: ClientProps;
+  volumetric: number;
+  subtotal: number;
+}
+
+export interface PreviewProps extends PDFData {
+  cancel: (value: boolean) => void;
 }
