@@ -24,7 +24,6 @@ const login = async (credentials: Partial<Record<string, unknown>>) => {
       is_admin: user.is_admin
     };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }
@@ -38,7 +37,8 @@ export const { signIn, signOut, auth } = NextAuth({
           const user = await login(credentials);
           return user;
         } catch (error) {
-          return null;
+          throw error;
+          // return null;
         }
       }
     })
