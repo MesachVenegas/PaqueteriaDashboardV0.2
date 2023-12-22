@@ -6,17 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getClient } from "@/app/libs/data";
 import { format } from "date-fns";
 import { es } from 'date-fns/locale';
-import { ClientProps } from "@/app/libs/definitions";
+import { ClientProps, OrderProps } from "@/app/libs/definitions";
 import Button from "@/components/dashboard/button/Button";
 
 export default async function ClientView({ params }: { params: { id: string }}) {
   const clientId = params.id;
   const count = 0
-  const client = await getClient(clientId) as ClientProps;
+  const client = await getClient(clientId) as unknown as ClientProps;
 
   return (
     <div className="flex flex-col gap-2 p-6">
-      <div className="flex w-full bg-slate-200 rounded-lg gap-6 p-6">
+      <div className="flex w-full bg-slate-200 dark:bg-slate-900 rounded-lg gap-6 p-6">
         <div>
           <Image src='/assets/default-avatar.png' width={200} height={200} alt="avatar imagen"/>
         </div>
@@ -66,7 +66,7 @@ export default async function ClientView({ params }: { params: { id: string }}) 
         </div>
       </div>
       <div>
-        <ClientsHistory />
+        <ClientsHistory orders={client.orders as OrderProps[] } />
         <Pagination count={count} />
       </div>
     </div>
