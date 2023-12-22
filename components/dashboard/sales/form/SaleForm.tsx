@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { states, valueFormatter } from "@/app/libs/utils";
 import { ClientProps, FormSaleProps, ProductProps } from '@/app/libs/definitions';
@@ -26,13 +26,13 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
   }
 
   const generateNote: SubmitHandler<FormSaleProps> = async (data) => {
-    setPdfData(data)
-    setShowBill(true)
+    setPdfData(data);
+    setShowBill(true);
   };
 
   useEffect( () => {
     const calVolumetric = width * length * height / 5000;
-    setVolumetric(calVolumetric)
+    setVolumetric(calVolumetric);
   },[height, width, length])
 
   return (
@@ -191,10 +191,11 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
               <select
                 id="name"
                 className="flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600"
-                defaultValue="land"
+                defaultValue="select"
                 {...register("send", { required: true })}
                 onChange={(e) => setDelivery(e.target.value)}
               >
+                <option value="select">Seleccionar</option>
                 <option value="land">Terrestre</option>
                 <option value="air">Aéreo</option>
               </select>
@@ -298,16 +299,15 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
       {
         showBill &&
         (
-          <Suspense fallback={<span>Cargando ...</span>}>
             <PreviewBill
               folio=''
               client={client}
-              data={pdfData || {}}
+              data={pdfData as FormSaleProps}
               volumetric={volumetric}
               subtotal={subTotal}
+              confirm={setShowBill}
               cancel={setShowBill}
             />
-          </Suspense>
         )
       }
     </>
