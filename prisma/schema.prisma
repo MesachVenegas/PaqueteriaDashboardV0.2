@@ -54,17 +54,26 @@ model Providers {
 // Tabla donde se almacena la informacion de las ordenes generadas
 model Order {
   id String @id @default(uuid())
-  client Client @relation(fields: [client_id], references: [id])
+  client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
   client_id String
-  seller User @relation(fields: [seller_id], references: [id])
+  seller User @relation(fields: [seller_id], references: [id], onDelete: Cascade)
   seller_id String
-  addresses String
-  bill Bills @relation(fields: [bill_id], references: [id])
-  bill_id Int
+  addressed_name String
+  addressed_phone String
+  addressed_street String
+  addressed_number String
+  addressed_colony String
+  addressed_city String
+  addressed_zip String
+  addressed_state String
+  addressed_reference String
+  package_length Float
+  package_width Float
+  package_height Float
+  package_weight Float
   total Float
-  type Delivery @default(land)
+  type Delivery
   payment_type Payment @default(cash)
-  is_complete Boolean
   registerAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
@@ -75,7 +84,6 @@ model Bills {
   url String
   registerAt DateTime @default(now())
   updateAt DateTime @updatedAt
-  order Order[]
 }
 
 // Tabla donde se almacena la informacion de las facturas generadas por gastos
@@ -83,7 +91,7 @@ model OtherBills {
   id String @id @default(uuid())
   name String
   description String
-  provider Providers @relation(fields: [provider_id], references: [id])
+  provider Providers @relation(fields: [provider_id], references: [id], onDelete: Cascade)
   provider_id String
   mount Float @default(0)
   registerAt DateTime @default(now())
