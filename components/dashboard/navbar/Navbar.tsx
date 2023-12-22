@@ -2,18 +2,21 @@
 
 import { faBell, faComment, faEarthAmerica, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between items-center bg-slate-200 dark:bg-slate-700 rounded-lg p-3">
-      <div className="capitalize font-bold text-2xl">
-        {pathname.split('/').pop()}
+    <nav className="flex justify-between items-center bg-slate-200 dark:bg-slate-950 rounded-lg p-5">
+      <div className="font-bold text-3xl">
+        Bienvenid@! Hoy es {format(new Date(), 'PPPP', { locale: es })}
+        {/* {pathname.split('/').pop()} */}
       </div>
       {/* Busqueda & Notificaciones */}
-      <div className="flex justify-center items-center gap-4">
+      {/* <div className="flex justify-center items-center gap-4">
         <div className="flex bg-slate-300/50 dark:bg-slate-600 gap-2 p-2 rounded-lg">
           <FontAwesomeIcon icon={faSearch} className="w-5 h-5" />
           <input type="search" name="search" placeholder="Buscar..." className="bg-transparent focus:border-none focus:outline-none"/>
@@ -30,7 +33,7 @@ export default function Navbar() {
             <FontAwesomeIcon icon={faEarthAmerica} className="w-5 h-5" />
           </span>
         </div>
-      </div>
+      </div> */}
     </nav>
   )
 }
