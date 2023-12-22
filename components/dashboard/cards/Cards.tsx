@@ -1,3 +1,4 @@
+import { valueFormatter } from '@/app/libs/utils'
 import { faMoneyBill, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -22,11 +23,13 @@ export default function Cards({ title, counter, profit, type, symbol } : {
       { Icon ? Icon : null}
       <div className='flex flex-col gap-5'>
         <span>{title}</span>
-        <span className='text-2xl font-medium'>{symbol} {counter}</span>
-        <span>
+        <span className='text-3xl font-medium'>
+          { type != 'clients' ? `${valueFormatter(counter)} mxn` : `${counter} clientes` }
+        </span>
+        {/* <span>
           <span className={`text-green-600`}>{profit}% </span>
           mas que la semana pasada
-        </span>
+        </span> */}
       </div>
     </div>
   )
