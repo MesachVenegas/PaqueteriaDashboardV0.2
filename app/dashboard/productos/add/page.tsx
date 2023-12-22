@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { createNewProduct } from "@/app/libs/actions";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 
 export default function AddProduct() {
-  const [errorMessage, setErrorMessage] = useState()
+  const [errorMessage, setErrorMessage] = useState();
+  const router = useRouter();
 
 
   const onSubmit = async (data: Iterable<readonly [PropertyKey, any]>) => {
@@ -18,8 +20,8 @@ export default function AddProduct() {
 
   return (
     <div className="flex justify-center h-[75vh] items-center p-4">
-      <form action={onSubmit} className="flex flex-col w-full max-w-2xl justify-center bg-slate-200 rounded-lg gap-4 p-6">
-          <h1 className="text-2xl text-slate-800 text-center p-4" >Agregar Nuevo Producto</h1>
+      <form action={onSubmit} className="flex flex-col w-full max-w-2xl justify-center bg-slate-200 dark:bg-slate-900 rounded-lg gap-4 p-6">
+          <h1 className="text-2xl text-slate-800 dark:text-slate-200 text-center p-4" >Agregar Nuevo Producto</h1>
           <div>
             <Label>
               Nombre:
@@ -48,7 +50,11 @@ export default function AddProduct() {
             </Label>
           </div>
           <div className="flex justify-around p-4">
-            <button className="bg-red-400 py-2 px-3 rounded-md hover:bg-red-500 text-white font-bold" type="reset">
+            <button
+              className="bg-red-400 py-2 px-3 rounded-md hover:bg-red-500 text-white font-bold"
+              type="reset"
+              onClick={() => router.back()}
+            >
               Cancelar
             </button>
             <button className="bg-blue-400 py-2 px-3 hover:bg-blue-500 text-white font-bold rounded-lg">
