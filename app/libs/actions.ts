@@ -8,7 +8,7 @@ import { signIn } from "../auth";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import ReactPDF from "@react-pdf/renderer";
-import { PDFData } from "./definitions";
+import { OrderSaveProps, PDFData } from "./definitions";
 import BillTemplate from "@/components/dashboard/sales/pdfGenerator/BillTemplate";
 
 export async function createNewClient(data: Iterable<readonly [PropertyKey, any]>) {
@@ -151,6 +151,44 @@ export const deleteProduct = async (id: number) => {
       revalidatePath('/dashboard/productos');
       return product;
     })
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export const saveOrder = async (orderData: OrderSaveProps) => {
+  const addressed = orderData.addresses;
+  const client = orderData.client;
+  const subtotal = orderData.subtotal;
+  const seller = { id: "96fb7378-7847-4b19-a6be-a149c1a06b48"};
+  try {
+    const result = await prisma.order.create({
+      data: {
+        client_id: client.id,
+        seller_id: seller.id,
+        addressed_name: addressed.name,
+        addressed_number: addressed.number,
+        addressed_street: addressed.street,
+        addressed_colony: addressed.colony,
+        addressed_phone: addressed.phone,
+        addressed_city: addressed.delegation,
+        addressed_reference: addressed.references,
+        addressed_state: addressed.state,
+        addressed_zip: addressed.zip_code,
+        package_height: Number(addressed.height),
+        package_length: Number(addressed.length),
+        package_width: Number(addressed.width),
+        package_weight: Number(addressed.weight),
+        payment_type: addressed.payment,
+        type: addressed.send,
+        total: Number(subtotal),
+      }
+    })
+
+    console.log(result);
+    revalidatePath('/dashboard/ventas');
+    redirect('/dashboard/clientes');
   } catch (error) {
     throw error;
   }
