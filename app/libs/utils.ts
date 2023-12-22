@@ -65,7 +65,7 @@ export const dataChart = [
   },
 ];
 
-export const valueFormatter = (number: number) => `$ ${new Intl.NumberFormat("mx").format(number).toString()}`;
+export const valueFormatter = (number: number) =>  `$ ${new Intl.NumberFormat("mx", { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number)}`
 
 export const states = [
   "Baja California",
