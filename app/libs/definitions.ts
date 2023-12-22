@@ -28,7 +28,19 @@ export interface OrderProps {
   id: string;
   client_id: string;
   seller_id: string;
-  addresses: string;
+  addressed_name: string;
+  addressed_phone: string;
+  addressed_street: string;
+  addressed_number: string;
+  addressed_colony: string;
+  addressed_city: string;
+  addressed_zip: string;
+  addressed_state: string;
+  addressed_reference: string;
+  package_length: number;
+  package_width: number;
+  package_height: number;
+  package_weight: number;
   bill_id: number;
   total: number;
   payment_type: 'cash' | 'card' | 'transfer' | 'partial';
@@ -108,7 +120,7 @@ export type FormProduct = {
 }
 
 export interface PDFData {
-  data: FormSaleProps | {};
+  data: FormSaleProps;
   folio: string;
   client: ClientProps;
   volumetric: number;
@@ -116,5 +128,14 @@ export interface PDFData {
 }
 
 export interface PreviewProps extends PDFData {
+  confirm: (value: boolean) => void;
   cancel: (value: boolean) => void;
+}
+
+
+export type OrderSaveProps = {
+  addresses: FormSaleProps;
+  client: ClientProps;
+  volumetric: number;
+  subtotal: number;
 }
