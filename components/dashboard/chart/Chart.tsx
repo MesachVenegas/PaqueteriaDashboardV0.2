@@ -6,7 +6,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function Chart() {
   return (
     <div className='flex flex-col gap-5 w-full h-[600px] p-5 bg-slate-200 dark:bg-slate-950 rounded-lg'>
-      <h2 className='font-medium text-gray-500 dark:text-gray-300'>Clientes por mes</h2>
+      <h2 className='font-medium text-gray-500'>Clientes por mes</h2>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           width={500}
@@ -20,9 +20,9 @@ export default function Chart() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
+          <XAxis dataKey="name"/>
+          <YAxis/>
+          <Tooltip/>
           <Area type="bump" dataKey="clientes" stroke="#5D97F5" fill="#5D97F5" />
         </AreaChart>
       </ResponsiveContainer>
