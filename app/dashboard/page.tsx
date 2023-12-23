@@ -5,6 +5,7 @@ import Rightbar from "@/components/dashboard/rigthbar/Rightbar";
 import { getClients } from "../libs/data";
 import { getDayliSales, getLastSales, getMonthlySales, getCustomersCountByMonth } from "../libs/boxcut/actions";
 import Transactions from "@/components/dashboard/tables/Transactions";
+import { TransactionProps } from "../libs/definitions";
 
 export default async function DashboardPage() {
   const response = await getClients('', 1);
@@ -24,7 +25,7 @@ export default async function DashboardPage() {
             <Cards title="Ventas Mensuales" type="monthlySales" counter={monthlySales} profit={15}/>
         </div>
         <Suspense>
-          <Transactions transactions={lastTransactions} />
+          <Transactions transactions={lastTransactions as TransactionProps[]} />
           <Chart data={clientsDataChart} />
         </Suspense>
       </div>

@@ -40,7 +40,7 @@ const paymentName : { [key: string]: string} = {
               <TableCell className='flex items-center gap-2'>
                 <span className='w-8 h-8 rounded-full overflow-hidden'>
                   <Image
-                    src={order.client.avatar || ''}
+                    src={order.client.avatar}
                     width={50}
                     height={50}
                     alt='avatar_imag'

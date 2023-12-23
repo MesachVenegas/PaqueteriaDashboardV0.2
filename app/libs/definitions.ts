@@ -169,5 +169,16 @@ export type TransactionProps = {
   payment_type: string,
   registerAt: Date,
   updateAt: Date,
-  client: ClientProps,
+  client: {
+    id: string;
+    avatar: string;
+    name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    address: string;
+    type: 'minors' | 'wholesaler';
+    registerAt: Date;
+    updateAt: Date;
+  },
 }
