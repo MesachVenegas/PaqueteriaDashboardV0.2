@@ -9,11 +9,10 @@ const icons = {
   monthlySales: <FontAwesomeIcon icon={faCalendar} className='w-5 h-5'/>,
 }
 
-export default function Cards({ title, counter, profit, type, symbol } : {
+export default function Cards({ title, counter, profit, type, } : {
   title: string,
   counter: number,
   profit: number,
-  symbol?: string,
   type: 'clients' | 'sales' | 'monthlySales'
 }) {
   const Icon = icons[type]
@@ -23,13 +22,13 @@ export default function Cards({ title, counter, profit, type, symbol } : {
       { Icon ? Icon : null}
       <div className='flex flex-col gap-5'>
         <span>{title}</span>
-        <span className='text-3xl font-medium'>
-          { type != 'clients' ? `${valueFormatter(counter)} mxn` : `${counter} clientes` }
+        <span className='text-4xl font-medium'>
+          { type != 'clients' ? `${valueFormatter(counter)}` : `${counter}` }
         </span>
-        {/* <span>
+        <span>
           <span className={`text-green-600`}>{profit}% </span>
           mas que la semana pasada
-        </span> */}
+        </span>
       </div>
     </div>
   )
