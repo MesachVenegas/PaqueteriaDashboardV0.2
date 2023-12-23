@@ -1,9 +1,10 @@
 'use client'
 
-import { dataChart } from '@/app/libs/utils';
+import { ChartProps } from '@/app/libs/definitions';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function Chart() {
+export default function Chart({ data } : { data: ChartProps[] }) {
+
   return (
     <div className='flex flex-col gap-5 w-full h-[600px] p-5 bg-slate-200 dark:bg-slate-950 rounded-lg'>
       <h2 className='font-medium text-gray-500'>Clientes por mes</h2>
@@ -11,7 +12,7 @@ export default function Chart() {
         <AreaChart
           width={500}
           height={400}
-          data={dataChart}
+          data={data}
           margin={{
             top: 10,
             right: 30,
@@ -20,7 +21,7 @@ export default function Chart() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name"/>
+          <XAxis dataKey="month"/>
           <YAxis/>
           <Tooltip/>
           <Area type="bump" dataKey="clientes" stroke="#5D97F5" fill="#5D97F5" />
