@@ -32,39 +32,6 @@ export const menuLinks = [
 ]
 
 
-export const dataChart = [
-  {
-    name: 'Septiembre',
-    clientes: 400,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Noviembre',
-    clientes: 700,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Diciembre',
-    clientes: 300,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Enero',
-    clientes: 180,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Febrero',
-    clientes: 890,
-    pv: 4800,
-    amt: 2181,
-  },
-];
-
 export const valueFormatter = (number: number) =>  `$ ${new Intl.NumberFormat("mx", { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number)}`
 
 export const states = [
