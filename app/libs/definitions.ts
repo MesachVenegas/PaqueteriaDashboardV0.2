@@ -109,8 +109,32 @@ export interface FormSaleProps {
   weight: string;
   send: "land" | "air";
   payment: "cash" | "card" | "transfer" | "partial";
+  money500: number;
+  money200: number;
+  money100: number;
+  money50: number;
+  money20: number;
+  coin20: number;
+  coin10: number;
+  coin5: number;
+  coin2: number;
+  coin1: number;
+  coin50: number;
 }
 
+export type BoxCutProps = {
+  money500: number;
+  money200: number;
+  money100: number;
+  money50: number;
+  money20: number;
+  coin20: number;
+  coin10: number;
+  coin5: number;
+  coin2: number;
+  coin1: number;
+  coin50: number;
+}
 
 export type FormProduct = {
   name: string;
