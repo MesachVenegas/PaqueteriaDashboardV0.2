@@ -8,7 +8,7 @@ import PaymentMethod from '../payment/PaymentMethod';
 import PreviewBill from '../preview/PreviewBill';
 
 export default function SaleForm({setClient, client, prices }: { setClient: Function, client: ClientProps, prices: ProductProps[]}  ) {
-  const [paymentMethod, setPaymentMethod] = useState('Efectivo');
+  const [paymentMethod, setPaymentMethod] = useState('');
   const [length, setLength] = useState(0)
   const [height, setHeight] = useState(0)
   const [width, setWidth] = useState(0)
@@ -28,6 +28,7 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
   const generateNote: SubmitHandler<FormSaleProps> = async (data) => {
     setPdfData(data);
     setShowBill(true);
+    console.log(data);
   };
 
   useEffect( () => {
@@ -224,7 +225,7 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
                 >
                   <option value={0}>Seleccione un paquete</option>
                   {
-                    prices.map( (price, index) => {
+                    prices.map( price => {
                       if(delivery === price.delivery){
                         return(
                           <option key={price.id} value={price.price}>{price.description}</option>
@@ -255,6 +256,7 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
                       setPaymentMethod(e.target.value)
                     }}
                   >
+                    <option value="none">Seleccionar...</option>
                     <option value="cash">Efectivo</option>
                     <option value="card">Tarjeta</option>
                     <option value="transfer">Transferencia</option>
@@ -280,6 +282,164 @@ export default function SaleForm({setClient, client, prices }: { setClient: Func
                   ) : null
                 }
               </div>
+              {/* Listar tipo de moneda recibida */}
+              {
+                paymentMethod === 'cash' ? (
+                <div className='flex  w-full justify-start gap-2'>
+
+                  <div className='flex flex-col gap-2'>
+                    <h4 className='text-center font-semibold text-lg'>Billetes</h4>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor='500' className='flex justify-end w-[200px]'>
+                        500
+                      </label>
+                      <input
+                        id='500'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('money500')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="200" className='flex justify-end w-[200px]'>
+                        200
+                      </label>
+                      <input
+                        id='200'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('money200')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="100" className='flex justify-end w-[200px]'>
+                        100
+                      </label>
+                      <input
+                        id='100'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('money100')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="50" className='flex justify-end w-[200px]'>
+                        50
+                      </label>
+                      <input
+                        id='50'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('money50')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="20" className='flex justify-end w-[200px]'>
+                        20
+                      </label>
+                      <input
+                        id='20'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('money20')}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-2'>
+                    <h4 className='text-center font-semibold text-lg'>Monedas</h4>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="coin20" className='flex justify-end w-[200px]'>
+                        20
+                      </label>
+                      <input
+                        id='coin20'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin20')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="10" className='flex justify-end w-[200px]'>
+                        10
+                      </label>
+                      <input
+                        id='10'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin10')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="5" className='flex justify-end w-[200px]'>
+                        5
+                      </label>
+                      <input
+                        id='5'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin5')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="2" className='flex justify-end w-[200px]'>
+                        2
+                      </label>
+                      <input
+                        id='2'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin2')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor="1" className='flex justify-end w-[200px]'>
+                        1
+                      </label>
+                      <input
+                        id='1'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin1')}
+                      />
+                    </div>
+                    <div className='flex items-center gap-2'>
+                      <label htmlFor=".50" className='flex justify-end w-[200px]'>
+                        .50
+                      </label>
+                      <input
+                        id='.50'
+                        type="number"
+                        placeholder='0'
+                        defaultValue={0}
+                        className='flex w-full bg-slate-300 dark:bg-slate-800 rounded-lg text-base p-2 border border-transparent focus:outline-none focus:border-slate-600'
+                        {...register('coin50')}
+                      />
+                    </div>
+                  </div>
+                </div>
+                ) : null
+              }
               {
                 cuotas > 1 ? <PaymentMethod cuotas={cuotas} /> : null
               }
