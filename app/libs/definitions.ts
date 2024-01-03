@@ -174,7 +174,6 @@ export type ChartProps = {
 export type TransactionProps = {
   id: string;
   client_id: string,
-  seller_id: string,
   addressed_name: string,
   addressed_phone: string,
   addressed_street: string,
