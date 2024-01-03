@@ -21,7 +21,6 @@ model User {
   last_name String
   password String
   is_admin Boolean @default(false)
-  orders Order[]
 }
 
 // Tabla con el registro de los clientes de la empresa
@@ -56,8 +55,6 @@ model Order {
   id String @id @default(uuid())
   client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
   client_id String
-  seller User @relation(fields: [seller_id], references: [id], onDelete: Cascade)
-  seller_id String
   addressed_name String
   addressed_phone String
   addressed_street String
@@ -72,6 +69,17 @@ model Order {
   package_height Float
   package_weight Float
   total Float
+  money500 Float @default(0)
+  money200 Float @default(0)
+  money100 Float @default(0)
+  money50 Float @default(0)
+  money20 Float @default(0)
+  coin20 Float @default(0)
+  coin10 Float @default(0)
+  coin5 Float @default(0)
+  coin2 Float @default(0)
+  coin1 Float @default(0)
+  coin50 Float @default(0)
   type Delivery
   payment_type Payment @default(cash)
   registerAt DateTime @default(now())
