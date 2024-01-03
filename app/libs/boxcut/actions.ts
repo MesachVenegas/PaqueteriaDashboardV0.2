@@ -32,6 +32,48 @@ export const getDayliSales = async () => {
   }
 }
 
+export const getOrdersByDay = async () => {
+  const now = new Date();
+  const startOfDay =  new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+
+  try {
+    const orders = await prisma.order.aggregate({
+      _sum: {
+        money500: true,
+        money200: true,
+        money100: true,
+        money50: true,
+        money20: true,
+        coin20: true,
+        coin10: true,
+        coin5: true,
+        coin2: true,
+        coin1: true,
+        coin50: true
+      },
+      where: {
+        AND: [
+          {
+            registerAt: {
+              gte: startOfDay.toISOString()
+            }
+          },
+          {
+            registerAt: {
+              lt: endOfDay.toISOString()
+            }
+          }
+        ]
+      }
+    })
+
+    return orders._sum;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 export const getCustomersCountByMonth = async () => {
   try {
