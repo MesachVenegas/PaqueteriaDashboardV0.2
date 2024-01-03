@@ -24,6 +24,8 @@ export default function Sidebar({ closeSession, userSignIn } : {closeSession: ()
     setTheme(!theme)
   }
 
+  console.log(user);
+
   useEffect( () => {
     const body = document.getElementsByTagName('body');
 
