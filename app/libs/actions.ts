@@ -158,30 +158,38 @@ export const deleteProduct = async (id: number) => {
 
 
 export const saveOrder = async (orderData: OrderSaveProps) => {
-  const addressed = orderData.addresses;
+  const order = orderData.addresses;
   const client = orderData.client;
   const subtotal = orderData.subtotal;
-  const seller = { id: "96fb7378-7847-4b19-a6be-a149c1a06b48"};
   try {
     const result = await prisma.order.create({
       data: {
         client_id: client.id,
-        seller_id: seller.id,
-        addressed_name: addressed.name,
-        addressed_number: addressed.number,
-        addressed_street: addressed.street,
-        addressed_colony: addressed.colony,
-        addressed_phone: addressed.phone,
-        addressed_city: addressed.delegation,
-        addressed_reference: addressed.references,
-        addressed_state: addressed.state,
-        addressed_zip: addressed.zip_code,
-        package_height: Number(addressed.height),
-        package_length: Number(addressed.length),
-        package_width: Number(addressed.width),
-        package_weight: Number(addressed.weight),
-        payment_type: addressed.payment,
-        type: addressed.send,
+        addressed_name: order.name,
+        addressed_number: order.number,
+        addressed_street: order.street,
+        addressed_colony: order.colony,
+        addressed_phone: order.phone,
+        addressed_city: order.delegation,
+        addressed_reference: order.references,
+        addressed_state: order.state,
+        addressed_zip: order.zip_code,
+        package_height: Number(order.height),
+        package_length: Number(order.length),
+        package_width: Number(order.width),
+        package_weight: Number(order.weight),
+        payment_type: order.payment,
+        money500: Number(order.money500),
+        money200: Number(order.money200),
+        money100: Number(order.money100),
+        money50: Number(order.money50),
+        money20: Number(order.money20),
+        coin20: Number(order.coin20),
+        coin10: Number(order.coin10),
+        coin5: Number(order.coin5),
+        coin2: Number(order.coin2),
+        coin50: Number(order.coin50),
+        type: order.send,
         total: Number(subtotal),
       }
     })
@@ -191,5 +199,6 @@ export const saveOrder = async (orderData: OrderSaveProps) => {
     redirect('/dashboard/clientes');
   } catch (error) {
     throw error;
+    console.log(error);
   }
 }
