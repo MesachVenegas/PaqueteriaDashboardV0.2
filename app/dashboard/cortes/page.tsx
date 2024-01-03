@@ -1,9 +1,9 @@
-import { getDayliSales, getMonthlySales } from '@/app/libs/boxcut/actions'
-import Cards from '@/components/dashboard/cards/Cards';
-import { Label } from '@/components/ui/Label';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Suspense } from 'react';
 import { Metadata } from 'next'
+import { getDayliSales, getMonthlySales, getOrdersByDay } from '@/app/libs/boxcut/actions'
+import BillData from '@/components/BoxCut/BillData';
+import Cards from '@/components/dashboard/cards/Cards';
+import { BoxCutProps } from '@/app/libs/definitions';
 
 export const metadata: Metadata = {
   title: 'Cortes de Caja | Paqueteria 5 Estrellas',
@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 
 
 export default async function BoxCut() {
-
   const totalSales = await getDayliSales();
   const totalSalesMonth = await getMonthlySales();
+  const data = await getOrdersByDay();
+
+  console.log(data);
 
   return (
     <div className='flex flex-col justify-center items-center p-4'>
@@ -23,20 +25,16 @@ export default async function BoxCut() {
         <Cards type='monthlySales' counter={totalSalesMonth} title='Ventas del Mes' profit={0} />
       </div>
       <section className='flex justify-between w-full gap-6 mt-6'>
-        <article className='flex flex-col items-center w-full border border-slate-400 p-4 rounded-lg'>
+        <article className='flex flex-col items-center w-full rounded-lg dark:bg-slate-950 p-4 gap-6'>
           <div className='flex w-full justify-around items-center'>
             <h2 className='font-semibold text-xl'>Generar Nuevo Corte</h2>
-            <button className='flex items-center justify-center w-44 h-10 gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg' >
-              <FontAwesomeIcon icon={faDownload} className='w-5 h-5' />
-              Obtener Datos
-            </button>
           </div>
-          <div>
-            
-          </div>
+          <Suspense>
+            <BillData data={data as BoxCutProps} />
+          </Suspense>
         </article>
 
-        <article className='flex flex-col items-center w-full border border-slate-400 p-4 rounded-lg'>
+        <article className='flex flex-col items-center w-full rounded-lg dark:bg-slate-950 p-4'>
           <h2>Últimos Cortes Realizados</h2>
         </article>
       </section>
