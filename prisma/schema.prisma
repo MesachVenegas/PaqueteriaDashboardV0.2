@@ -7,117 +7,142 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("MYSQL_PRISMA_URL")
-  // url      = env("MYSQL_PRISMA_DEV_URL")
+  url      = env("DB_PRISMA_URL")
 }
 
 
-// Tabla con el registro de usuarios del dashboard
+//? Registro de usuarios del sistema
 model User {
-  id String @id @default(uuid())
-  avatar String?
-  username String @unique
-  name String
-  last_name String
-  password String
-  is_admin Boolean @default(false)
+  id            String       @id @default(cuid())
+  avatar_url    String?
+  username      String       @unique
+  name          String?
+  last_name     String?
+  password      String
+  role          Role       @default(user)
+  is_active     Boolean     @default(true)
+  registered_at DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  outlays       Outlay[]
+  orders        Order[]
 }
 
-// Tabla con el registro de los clientes de la empresa
+//? Registro de los clientes de la empresa
 model Client {
-  id String @id @default(uuid())
-  avatar String? @default("/assets/default-avatar.png")
-  name String
-  last_name String
-  email String? @unique
-  phone String @unique
-  address String
-  type TypeClient @default(minors)
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  orders Order[]
+  id            String      @id @default(cuid())
+  avatar_url    String?     @default("/assets/default-avatar.png")
+  name          String
+  last_name     String
+  email         String?     @unique
+  phone         String      @unique
+  address       String
+  type          Buyer       @default(minors)
+  register_at   DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  orders        Order[]
 }
-// Tabla con el registro de los proveedores de la empresa
+//? Registro de provedores
 model Providers {
-  id String @id @default(uuid())
-  avatar String? @default("/assets/logo.jpg")
-  name String
-  email String? @unique
-  phone String @unique
-  address String?
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  otherBills OtherBills[]
+  id            String      @id @default(uuid())
+  avatar_url    String?
+  name          String
+  email         String?     @unique
+  phone         String      @unique
+  address       String?
+  registed_at   DateTime    @default(now())
+  update_at     DateTime    @updatedAt
+
+  outlays       Outlay[]
 }
 
-// Tabla donde se almacena la informacion de las ordenes generadas
+//? Registro de ordenes generadas
 model Order {
-  id String @id @default(uuid())
-  client Client @relation(fields: [client_id], references: [id], onDelete: Cascade)
-  client_id String
-  addressed_name String
-  addressed_phone String
-  addressed_street String
-  addressed_number String
-  addressed_colony String
-  addressed_city String
-  addressed_zip String
-  addressed_state String
-  addressed_reference String
-  package_length Float
-  package_width Float
-  package_height Float
-  package_weight Float
-  total Float
-  money500 Float @default(0)
-  money200 Float @default(0)
-  money100 Float @default(0)
-  money50 Float @default(0)
-  money20 Float @default(0)
-  coin20 Float @default(0)
-  coin10 Float @default(0)
-  coin5 Float @default(0)
-  coin2 Float @default(0)
-  coin1 Float @default(0)
-  coin50 Float @default(0)
-  type Delivery
-  payment_type Payment @default(cash)
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  id              String      @id @default(cuid())
+  client_id       String
+  user_id         String
+  addressed_name  String
+  pkg_long        Float
+  pkg_width       Float
+  pkg_height      Float
+  pkg_weight      Float
+  type            Delivery
+  total           Float
+  payment_type    Payment     @default(cash)
+  is_complete     Boolean     @default(false)
+  is_cancelled    Boolean     @default(false)
+  registed_at     DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+
+  products_inOrder            ProductsInOrder[]
+  payment_cash    PaymentCashByOrder[]
+  client          Client      @relation(fields: [client_id], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [user_id], references: [id])
 }
 
-// Tabla donde se almacena la informacion de las facturas generadas por ventas
-model Bills {
-  id Int @id @default(autoincrement())
-  url String
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+//? Registro de los gastos generados
+model Outlay {
+  id            String      @id @default(uuid())
+  user_id       String
+  provider_id   String
+  description   String
+  mount         Float
+  pieces        Int         @default(0)
+  created_at    DateTime    @default(now())
+
+  user          User        @relation(fields: [user_id], references: [id])
+  provider      Providers   @relation(fields: [provider_id], references: [id])
 }
 
-// Tabla donde se almacena la informacion de las facturas generadas por gastos
-model OtherBills {
-  id String @id @default(uuid())
-  name String
-  description String
-  provider Providers @relation(fields: [provider_id], references: [id], onDelete: Cascade)
-  provider_id String
-  mount Float @default(0)
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+//? Registro de productos disponibles
+model Product {
+  id            String      @id @default(uuid())
+  name          String
+  description   String?
+  delivery_type String
+  cost          Float       @default(0)
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  products_inOrders         ProductsInOrder[]
 }
 
-// Prices model donde se almacenan la lista de costos por tipos de envio en base al peso.
-model Price {
-  id Int @id @default(autoincrement())
-  name String
-  description String
-  price Float
-  delivery Delivery
-  registerAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+
+//? Registro de los productos de una orden
+model ProductsInOrder {
+  id            String      @id @default(uuid())
+  order_id      String
+  product_id    String
+  size          String?
+  quanty        Int         @default(1)
+  price         Float
+
+  oders          Order       @relation(fields: [order_id], references: [id])
+  products       Product     @relation(fields: [product_id], references: [id])
 }
 
-// Tipos de pagos permitidos
+//? Registro de el tipo de moneadas con el que se completo una orden
+model PaymentCashByOrder {
+  id            String      @id @default(cuid())
+  order_id      String
+  money_500     Float?
+  money_200     Float?
+  money_100     Float?
+  money_50      Float?
+  money_20      Float?
+  coin_20       Float?
+  coin_10       Float?
+  coin_5        Float?
+  coin_2        Float?
+  coin_1        Float?
+  coin_50       Float?
+
+  order         Order       @relation(fields: [order_id], references: [id])
+}
+
+
+//? Tipos de pagos permitidos
 enum Payment {
   cash
   card
@@ -125,13 +150,20 @@ enum Payment {
   partial
 }
 
-// Tipos de envios permitidos
+//? Tipos de envios permitidos
 enum Delivery {
   land
   air
 }
 
-enum TypeClient {
+//? Tipos de clientes
+enum Buyer {
   wholesaler
   minors
+}
+
+//? Tipo de roles de usuario
+enum Role {
+  user
+  admin
 }
