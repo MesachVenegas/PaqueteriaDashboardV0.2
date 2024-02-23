@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
-import { inter } from '@/app/ui/fonts'
-import './ui/globals.css'
-import ProgressBarProvider from './ui/progressBar/ProgresBar'
+
 import { Analytics } from '@vercel/analytics/react'
+
+import '@/styles/globals.css';
+import { inter } from '@/styles/fonts'
+import ProgressBarProvider from '@/components/ProgresBar'
 
 export const metadata: Metadata = {
   title: 'Paqueteria 5 Estrellas',
