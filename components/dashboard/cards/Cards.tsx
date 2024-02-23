@@ -18,11 +18,11 @@ export default function Cards({ title, counter, profit, type, } : {
   const Icon = icons[type]
 
   return (
-    <div className='flex bg-slate-200 dark:bg-slate-950 hover:bg-slate-300 w-full rounded-lg gap-2 p-5 cursor-pointer'>
+    <div className='flex  bg-slate-200 dark:bg-slate-950 hover:bg-slate-300 w-full md:max-w-[300px] rounded-lg gap-2 p-4 cursor-pointer'>
       { Icon ? Icon : null}
       <div className='flex flex-col gap-5'>
         <span>{title}</span>
-        <span className='text-4xl font-medium'>
+        <span className='text-3xl font-medium'>
           { type != 'clients' ? `${valueFormatter(counter)}` : `${counter}` }
         </span>
         <span>
