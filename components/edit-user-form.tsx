@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import AsideWrapper from "@/components/aside-wrapper";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SheetClose } from "./ui/sheet";
 
 export default  function EditUserForm({ user } : { user: UserProps }) {
   const [isPending, startTransition] = useTransition();
@@ -188,13 +189,15 @@ export default  function EditUserForm({ user } : { user: UserProps }) {
                 )
               }
             </Button>
-            <button
-              type='reset'
-              className='max-w-xs hover:underline italic text-xs'
-              onClick={ () => form.reset()}
-            >
-              Limpiar Formulario
-            </button>
+            <SheetClose asChild>
+              <button
+                type='reset'
+                className='w-full bg-red-600 text-white hover:bg-red-700 p-1.5 rounded-md'
+                onClick={ () => form.reset()}
+              >
+                Cancelar
+              </button>
+            </SheetClose>
           </div>
         </form>
       </Form>
