@@ -3,30 +3,29 @@ import { faCashRegister, faDollarSign, faFileInvoiceDollar, faGear, faHandHoldin
 
 export const menuLinks = [
   {
-    title: "Principal",
+    title: "principal",
     links: [
-      { title: "Dashboard", url: "/dashboard", icon: faLayerGroup, user: true, admin: true },
-      { title: "Ventas", url: "/dashboard/ventas", icon: faDollarSign, user: true, admin: true },
-      { title: "Clientes", url: "/dashboard/clientes", icon: faUsers, user: true, admin: true },
-      { title: "Provedores", url: "/dashboard/provedores", icon: faHandHoldingHeart, user: true, admin: true },
-      { title: "Productos", url: "/dashboard/productos", icon: faTruckFast, user: true, admin: true },
+      { title: "dashboard", url: "/dashboard", icon: faLayerGroup, user: true, admin: true },
+      { title: "ventas", url: "/dashboard/sales", icon: faDollarSign, user: true, admin: true },
+      { title: "clientes", url: "/dashboard/clients", icon: faUsers, user: true, admin: true },
+      { title: "provedores", url: "/dashboard/providers", icon: faHandHoldingHeart, user: true, admin: true },
+      { title: "productos", url: "/dashboard/products", icon: faTruckFast, user: true, admin: true },
     ]
   },
   {
-    title: "Analítica",
+    title: "analítica",
     links: [
-      { title: "Reportes", url: "/dashboard/reportes", icon: faRankingStar, user: true, admin: true },
-      { title: "Remisiones", url: "/dashboard/remisiones", icon: faFileInvoiceDollar, user: true, admin: true },
-      { title: "Cortes", url: "/dashboard/cortes", icon: faCashRegister, user: true, admin: true },
-      { title: "Gastos", url: "/dashboard/gastos", icon: faMoneyBillTransfer, user: true, admin: true },
+      { title: "reportes", url: "/dashboard/reports", icon: faRankingStar, user: true, admin: true },
+      { title: "remisiones", url: "/dashboard/bills", icon: faFileInvoiceDollar, user: true, admin: true },
+      { title: "cortes", url: "/dashboard/cuts", icon: faCashRegister, user: true, admin: true },
+      { title: "gastos", url: "/dashboard/outlays", icon: faMoneyBillTransfer, user: true, admin: true },
     ]
   },
   {
-    title: "Usuario",
+    title: "usuario",
     links: [
-      { title: "Ajustes", url: "/dashboard/ajustes", icon: faGear, user: true, admin: true },
-      { title: "Admin", url: "/dashboard/admin", icon: faBlackTie, user: false, admin: true },
-      { title: "Ayuda", url: "/dashboard/ayuda", icon: faLifeRing, user: true, admin: true },
+      { title: "ajustes", url: "/dashboard/settings", icon: faGear, user: true, admin: true },
+      { title: "ayuda", url: "/dashboard/help", icon: faLifeRing, user: true, admin: true },
     ]
   },
 ]
