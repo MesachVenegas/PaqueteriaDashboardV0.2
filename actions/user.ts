@@ -6,9 +6,8 @@ import * as z from 'zod';
 import bcrypt from 'bcryptjs';
 import { Role } from '@prisma/client';
 
-import prisma from '@/app/libs/prisma';
+import prisma from '@/lib/prisma';
 import { EditUserSchema, UserRegisterSchema } from '@/schema';
-import { UserProps } from '@/types/user';
 
 
 /**
