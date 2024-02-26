@@ -1,32 +1,20 @@
 'use client'
 
+import { useEffect } from "react";
+
 import Image from "next/image";
-import { authenticate } from "../libs/actions";
-import LoginForm from "@/components/login/loginForm/LoginForm";
-import { useEffect, useState } from "react";
+
+import LoginForm from "@/components/login-form";
+
 
 export default function Login() {
   const themePreference = typeof window !== 'undefined' ? localStorage.getItem('dark') : 'false';
-  const [errorMessage, setErrorMessage] = useState();
 
   useEffect( () => {
     const body = document.getElementsByTagName('body');
-
-    if(themePreference == 'true'){
-    body[0].classList.add('dark')
-    } else {
-    body[0].classList.remove('dark')
-    }
+    themePreference == 'true' ? body[0].classList.add('dark') : body[0].classList.remove('dark')
 
   },[themePreference])
-
-  const handleLogin = async (data: Iterable<readonly [PropertyKey, any]>) => {
-    await authenticate(data)
-    .catch( (error) => {
-        setErrorMessage(error.message)
-      }
-    )
-  }
 
 
 
@@ -37,19 +25,7 @@ export default function Login() {
           <Image src='/assets/logo_start_blue.png' width={150} height={150} alt="Paqueteria 5 Estrellas" style={{ objectFit: 'cover'}}/>
         </div>
         <h1 className="text-xl text-center text-gray-700 dark:text-gray-100  mt-8">Iniciar Session</h1>
-        <LoginForm handleLogin={handleLogin}/>
-        {
-          errorMessage && (
-            <div className="flex justify-center items-center border border-red-400 rounded-md p-2 bg-red-300">
-              {
-                errorMessage === 'User not found' && "Usuario no encontrado o Incorrecto"
-              }
-              {
-                errorMessage === 'Invalid password' && "Contraseña no valida"
-              }
-            </div>
-          )
-        }
+        <LoginForm/>
       </div>
     </div>
   )
