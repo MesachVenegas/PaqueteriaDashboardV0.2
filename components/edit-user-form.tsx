@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { ClipLoader } from "react-spinners";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { UserProps } from "@/types/user";
+import { UserProps } from "@/types/user.types";
 import { editUser } from "@/actions/user";
 import { EditUserSchema } from "@/schema";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AsideWrapper from "@/components/aside-wrapper";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
