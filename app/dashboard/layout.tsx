@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import Footer from "@/components/dashboard/footer/Footer";
-import Sidebar from "@/components/dashboard/sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar";
 
 export const metadata: Metadata = {
   title: 'Dashboard | Paqueteria 5 Estrellas',
