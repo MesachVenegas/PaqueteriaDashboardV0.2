@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { redirect, usePathname } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faGear, faLifeRing, faMoon, faPersonWalkingArrowRight, faSun } from "@fortawesome/free-solid-svg-icons";
@@ -18,10 +19,12 @@ import {
   MenubarSeparator,
   MenubarTrigger
 } from '@/components/ui/menubar';
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const user = useCurrentUser();
   const themePreference = typeof window !== 'undefined' ? localStorage.getItem('dark') : 'false';
   const [theme, setTheme] = useState( themePreference === 'true' ? true : false );
   const [themeName, setThemeName] = useState("Dark");
@@ -32,6 +35,7 @@ export default function Sidebar() {
     localStorage.setItem("dark", `${!theme}`);
     setTheme( prev => !prev)
   }
+
 
 
   useEffect( () => {
@@ -48,17 +52,26 @@ export default function Sidebar() {
   },[theme, themePreference, themeName])
 
 
+
   return (
     <>
       {/* Desktop navigation menu */}
       <div className="hidden lg:flex flex-col w-64 justify-start items-start h-full bg-slate-200 dark:bg-slate-950 dark:text-white shadow-xl sticky top-0 left-0">
         <div className="flex items-center gap-2 p-4 mt-4">
           <Avatar className="w-12 h-12">
-            <AvatarFallback>UN</AvatarFallback>
+            {
+              user?.image ? (
+                <AvatarImage src={user?.image} alt="avatar image" />
+              ) : (
+                <AvatarFallback>
+                  {`${user?.name?.split(' ')[0][0]}${user?.name?.split(' ')[1][0]}`}
+                </AvatarFallback>
+              )
+            }
           </Avatar>
           <div className="flex flex-col gap-1">
-            <p className="text-sm font-medium capitalize">user name</p>
-            <p className="text-xs">Rol de Usuario Logeado</p>
+            <p className="text-sm font-medium capitalize">{user?.name}</p>
+            <p className="text-xs">{user?.role === 'admin' ? 'Administrador' : 'Usuario'}</p>
           </div>
         </div>
 
@@ -103,6 +116,9 @@ export default function Sidebar() {
                 <button
                   type="button"
                   className="flex gap-2 text-sm font-medium text-red-600 dark:text-red-400 py-2 px-3 rounded-md hover:bg-red-600  hover:text-white dark:hover:text-white border border-red-600 dark:border-red-400 dark:hover:border-transparent"
+                  onClick={ () => signOut({
+                    callbackUrl: '/'
+                  })}
                 >
                   <FontAwesomeIcon  icon={faPersonWalkingArrowRight} className="w-5 h-5"/>
                   Salir
@@ -167,14 +183,22 @@ export default function Sidebar() {
           <MenubarMenu>
             <MenubarTrigger className="flex justify-center items-center w-12 h-12 rounded-full bg-transparent cursor-pointer">
               <Avatar className="w-12 h-12">
-                <AvatarFallback>UN</AvatarFallback>
+                {
+                  user?.image ? (
+                    <AvatarImage src={user?.image} alt="avatar image" />
+                  ) : (
+                    <AvatarFallback>
+                      {`${user?.name?.split(' ')[0][0]}${user?.name?.split(' ')[1][0]}`}
+                    </AvatarFallback>
+                  )
+                }
               </Avatar>
             </MenubarTrigger>
             <MenubarContent>
               <div className="px-4 py-2">
                 <ul className="flex text-sm w-full flex-col items-end capitalize">
-                  <li>user name</li>
-                  <li>rol</li>
+                  <li>{user?.name}</li>
+                  <li>{user?.role === 'admin' ? 'Administrador' : 'Usuario'}</li>
                 </ul>
               </div>
               <MenubarSeparator className="mb-4" />
@@ -199,6 +223,7 @@ export default function Sidebar() {
               </MenubarItem>
               <MenubarItem
                 className="flex w-full min-h-[28px] items-center gap-2 capitalize hover:bg-red-600 dark:hover:bg-red-700 focus:hover:bg-red-700 focus:text-white rounded-sm p-2"
+                onClick={ () => signOut({ callbackUrl: '/'})}
               >
                 <FontAwesomeIcon  icon={faPersonWalkingArrowRight} className="w-5 h-5"/>
                 salir
