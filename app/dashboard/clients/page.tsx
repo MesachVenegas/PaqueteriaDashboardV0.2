@@ -1,14 +1,10 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next'
-import ClientsTable from "@/components/dashboard/tables/ClientsTable";
-import Pagination from "@/components/dashboard/pagination/Pagination";
+import Pagination from "@/components/Pagination";
 import SearchBar from "@/components/dashboard/search/SearchBar";
-import Button from '@/components/dashboard/button/Button';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { getClients } from '@/app/libs/data';
-import { ClientProps } from '@/app/libs/definitions';
-import { deleteClient as RemoveClient } from '@/app/libs/actions';
-import { revalidatePath } from 'next/cache';
+import ClientsTable from '@/components/clients-table';
+import { getClientBySearch, getClientCount } from '@/data/clients';
+import AddClientButton from '@/components/add-client-btn';
 
 
 export const metadata: Metadata = {
@@ -19,25 +15,18 @@ export const metadata: Metadata = {
 export default async function Clients({ searchParams }: { searchParams: { search: string, page: string }}) {
   const search = searchParams?.search || '';
   const page = searchParams?.page || '1';
-  const response = await getClients(search, parseInt(page));
-  const { count, clients } = Array.isArray(response) ? { count: 0, clients: [] } : response;
-
-  const deleteClient = async (id: string) => {
-    'use server'
-    await RemoveClient(id)
-      .then( () => revalidatePath('/dashboard/clientes'))
-      .catch( (error) => console.log(error));
-  }
+  const clients = await getClientBySearch(search, parseInt(page));
+  const count = await getClientCount();
 
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex w-full justify-between">
         <SearchBar placeholder="Buscar un cliente..." />
-        <Button type='link' source='/dashboard/clientes/create' text="Agregar Cliente" icon={faUserPlus} />
+        <AddClientButton />
       </div>
       <div className="flex flex-col">
         <Suspense fallback={<span>Cargando...</span>}>
-          <ClientsTable data={clients as ClientProps[]} removeClient={deleteClient} />
+          <ClientsTable clients={clients} />
         </Suspense>
         <Pagination count={count}/>
       </div>
