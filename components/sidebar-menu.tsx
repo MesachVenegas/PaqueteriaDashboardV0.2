@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faGear, faLifeRing, faMoon, faPersonWalkingArrowRight, faSun } from "@fortawesome/free-solid-svg-icons";
 
-import { menuLinks } from "@/app/libs/utils";
+import { menuLinks } from "@/lib/constants";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Menubar,
