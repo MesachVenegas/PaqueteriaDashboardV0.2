@@ -1,5 +1,7 @@
 'use client'
 
+import { useRouter } from "next/navigation";
+
 import { toast } from "react-toastify";
 import { Card, Title } from "@tremor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,6 +26,7 @@ interface ProductsTableProps {
 }
 
 export default function ClientsTable({ clients } : ProductsTableProps) {
+  const router = useRouter();
 
   const handleDelete = (id: string) => {
     deleteClient(id)
@@ -33,7 +36,7 @@ export default function ClientsTable({ clients } : ProductsTableProps) {
   }
 
   return(
-    <Card>
+    <Card className="bg-slate-200 dark:bg-slate-900 rounded-md">
       <ToastNotification />
       <Title>Clientes Registrados</Title>
       <Table className="mt-5">
@@ -49,7 +52,11 @@ export default function ClientsTable({ clients } : ProductsTableProps) {
         <TableBody>
           {
             clients?.map( client => (
-              <TableRow key={client.id}>
+              <TableRow
+                key={client.id}
+                className="cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-950"
+                onClick={ () => router.push(`/dashboard/clients/${client.id}`) }
+              >
                 <TableCell className="capitalize">
                   {client.name} {client.last_name}
                 </TableCell>
