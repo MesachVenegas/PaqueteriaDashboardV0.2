@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/Input';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { registerNewUser } from '@/actions/user';
 import { TabsContent } from '@/components/ui/tabs';
