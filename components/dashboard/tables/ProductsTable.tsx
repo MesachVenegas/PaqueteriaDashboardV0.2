@@ -1,77 +1,93 @@
 'use client'
 
-import { ProductProps } from "@/app/libs/definitions";
-import { valueFormatter } from "@/app/libs/utils";
-import { faEdit, faPlaneDeparture, faTrash, faTruck } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import { Card, Title } from "@tremor/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Text, Title } from "@tremor/react";
-import { format } from "date-fns";
+import { faPlaneDeparture, faTrash, faTruck } from "@fortawesome/free-solid-svg-icons";
 
-export default function ProductsTable({ products, deleteProd } : { products: ProductProps[], deleteProd: (id:number)=> void} ) {
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableFooter
+} from '@/components/ui/table';
+import { Button } from "@/components/ui/button";
+import { valueFormatter } from "@/lib/utils";
+import { deleteProduct } from "@/actions/products";
+import { ProductProps } from "@/types/product.types";
+import ToastNotification from "@/components/toast-notification";
+import EditProductBtn from "@/components/edit-product-form";
+
+interface ProductsTableProps {
+  products: ProductProps[] | null,
+  count: number
+}
+
+export default function ProductsTable({ products, count } : ProductsTableProps) {
+
+  const handleDelete = (id: string) => {
+    deleteProduct(id)
+      .then( (res) => {
+        if(res.code === 'success') {
+          toast.success(res.message)
+        } else {
+          toast.error(res.message)
+        }
+      }).catch( error => toast.error(error.message))
+  }
 
   return(
-    <Card>
-      <Title>Productos Listados</Title>
-      <Table className="mt-5">
-        <TableHead>
+    <Card className="bg-slate-200 dark:bg-slate-900 rounded-md p-12">
+      <ToastNotification />
+      <Title>Productos Registrados</Title>
+      <Table className="mt-5 w-full max-w-7xl mx-auto">
+        <TableHeader>
           <TableRow>
-            <TableHeaderCell className="dark:text-gray-300">Nombre</TableHeaderCell>
-            <TableHeaderCell className="dark:text-gray-300">Descripcion</TableHeaderCell>
-            <TableHeaderCell className="dark:text-gray-300">Tipo</TableHeaderCell>
-            <TableHeaderCell className="dark:text-gray-300">Costo</TableHeaderCell>
-            <TableHeaderCell className="dark:text-gray-300">Registro</TableHeaderCell>
-            <TableHeaderCell className="dark:text-gray-300">Actualizado</TableHeaderCell>
+            <TableHead>Nombre</TableHead>
+            <TableHead className="hidden md:table-cell">Descripcion</TableHead>
+            <TableHead>Tipo de Envió</TableHead>
+            <TableHead>Costo</TableHead>
+            <TableHead className="text-right">Acciones</TableHead>
           </TableRow>
-        </TableHead>
+        </TableHeader>
         <TableBody>
-          {products.map((item) => (
-            <TableRow key={item.name} className="dark:text-gray-300 dark:hover:bg-slate-800 hover:bg-slate-200">
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.description}</TableCell>
-              <TableCell>
-                <div className="flex gap-2 font-bold">
-                  {
-                    item.delivery === 'land'
-                    ? (
-                      <>
-                        <FontAwesomeIcon icon={faTruck} className="w-5 h-5 mr-2 " />
-                        <span>Terrestre</span>
-                      </>
-                    )
-                    : (
-                      <>
-                        <FontAwesomeIcon icon={faPlaneDeparture} className="w-5 h-5 mr-2" />
-                        <span>Aéreo</span>
-                      </>
-                    )
-                  }
-                </div>
-              </TableCell>
-              <TableCell className="font-bold">
-                {valueFormatter(item.price)}
-              </TableCell>
-              <TableCell>
-                {format(item.registerAt, "dd/MM/yyyy hh:mm b")}
-              </TableCell>
-              <TableCell>
-                {format(item.updateAt, "dd/MM/yyyy hh:mm b")}
-              </TableCell>
-              <TableCell className="flex gap-4 items-center font-semibold">
-                <span className="flex items-center gap-2 text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-500 cursor-pointer">
-                  <FontAwesomeIcon icon={faEdit} className="w-4 h-4" />
-                  Editar
-                </span>
-                <span
-                  className="flex items-center gap-2 text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-500 cursor-pointer"
-                  onClick={() => deleteProd(item.id)}
-                >
-                  <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
-                  Eliminar
-                </span>
-              </TableCell>
-            </TableRow>
-          ))}
+          {
+            products?.map( product => (
+              <TableRow key={product.id}>
+                <TableCell className="capitalize">{product.name}</TableCell>
+                <TableCell className="hidden md:table-cell">{product.description}</TableCell>
+                <TableCell className="flex gap-1 items-center">
+                  <FontAwesomeIcon
+                    icon={product.delivery_type === 'land' ? faTruck : faPlaneDeparture } className="w-5 h-5"/>
+                  {product.delivery_type === 'land' ? 'Terrestre' : 'Aéreo'}
+                </TableCell>
+                <TableCell>{valueFormatter(product.cost)}</TableCell>
+                <TableCell className="flex justify-end">
+                  <div className="flex gap-2 justify-end items-center px-3">
+                    <EditProductBtn product={product} />
+                    <Button
+                      variant="ghost"
+                      className="flex gap-1 items-center p-0 hover:text-red-400"
+                      onClick={ () => handleDelete(product.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} className="w-4 h-4" />
+                      <span className="text-xs">Eliminar</span>
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))
+          }
         </TableBody>
+        <TableFooter className="bg-slate-200 dark:bg-slate-950">
+          <TableRow>
+            <TableCell colSpan={4}>Productos registrados</TableCell>
+            <TableCell className="text-right">{count}</TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
     </Card>
   )
