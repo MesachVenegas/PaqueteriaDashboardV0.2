@@ -1,6 +1,6 @@
 'use server'
 
-import prisma from "@/app/libs/prisma";
+import prisma from "@/lib/prisma";
 
 /**
  * Retrieves a user by their username.
