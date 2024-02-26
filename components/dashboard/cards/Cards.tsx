@@ -1,4 +1,4 @@
-import { valueFormatter } from '@/app/libs/utils'
+import { valueFormatter } from '@/lib/utils'
 import { faMoneyBill, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
