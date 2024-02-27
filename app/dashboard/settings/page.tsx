@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { UserProps } from "@/types/user";
+import { UserProps } from "@/types/user.types";
 import { getAllUsers } from "@/data/user";
 import { Card } from "@/components/ui/card";
 import UsersTable from "@/components/users-table";

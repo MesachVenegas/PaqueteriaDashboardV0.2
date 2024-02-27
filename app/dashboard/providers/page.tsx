@@ -1,5 +1,5 @@
 import Button from '@/components/dashboard/button/Button'
-import Pagination from '@/components/dashboard/pagination/Pagination'
+import Pagination from '@/components/Pagination'
 import SearchBar from '@/components/dashboard/search/SearchBar'
 import ProvidersTable from '@/components/dashboard/tables/ProvidersTables'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
