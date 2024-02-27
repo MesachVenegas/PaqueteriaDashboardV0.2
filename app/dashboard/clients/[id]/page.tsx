@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Pagination from "@/components/dashboard/pagination/Pagination";
+import Pagination from "@/components/Pagination";
 import ClientsHistory from "@/components/dashboard/tables/ClientHistory";
 import { faCube, faCubes, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
