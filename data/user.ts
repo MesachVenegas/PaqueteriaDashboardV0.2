@@ -63,3 +63,35 @@ export async function getAllUsers() {
     throw error;
   }
 }
+
+
+/**
+ * Search for users based on a search query and page number.
+ *
+ * @param {string} search - The search query
+ * @param {number} page - The page number
+ * @return {Promise<object>} An object containing the users and the total count
+ */
+export async function searchUserByQuery(search: string, page: number): Promise<object> {
+  const usersPerPage = 6;
+
+  try {
+    const count = await prisma.user.count()
+    const users = await prisma.user.findMany({
+      where: {
+        OR: [
+          { name: { contains: search } },
+          { last_name: { contains: search } },
+          { username: { contains: search } },
+        ]
+      },
+      take: usersPerPage,
+      skip: (page - 1) * usersPerPage,
+    });
+    if (users.length === 0) return [];
+    return { users, count };
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error al obtener los usuarios');
+  }
+}
