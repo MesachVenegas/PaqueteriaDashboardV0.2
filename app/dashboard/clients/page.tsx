@@ -27,8 +27,8 @@ export default async function Clients({ searchParams }: { searchParams: { search
       <div className="flex flex-col">
         <Suspense fallback={<span>Cargando...</span>}>
           <ClientsTable clients={clients} />
+          <Pagination count={count}/>
         </Suspense>
-        <Pagination count={count}/>
       </div>
     </div>
   )
