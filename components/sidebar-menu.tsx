@@ -203,26 +203,26 @@ export default function Sidebar() {
               </div>
               <MenubarSeparator className="mb-4" />
               <Link href='/dashboard/settings' className="flex w-full" >
-                <MenubarItem className="menu-item">
+                <MenubarItem className="menu-item cursor-pointer">
                     <FontAwesomeIcon  icon={faGear} className="w-5 h-5"/>
                     ajustes
                 </MenubarItem>
               </Link>
               <Link href='/dashboard/help' className="flex w-full">
-                <MenubarItem className="menu-item">
+                <MenubarItem className="menu-item cursor-pointer">
                     <FontAwesomeIcon  icon={faLifeRing} className="w-5 h-5"/>
                     ayuda
                 </MenubarItem>
               </Link>
               <MenubarItem
-                className="flex w-full min-h-[28px] items-center gap-2 capitalize hover:bg-gray-900 dark:hover:bg-yellow-500/90 focus:hover:bg-gray-900 focus:hover:text-white focus:text-white dark:focus:hover:text-black dark:focus:text-black  rounded-sm p-2"
+                className="flex w-full min-h-[28px] items-center gap-2 capitalize hover:bg-gray-900 dark:hover:bg-yellow-500/90 focus:hover:bg-gray-900 focus:hover:text-white focus:text-white dark:focus:hover:text-black dark:focus:text-black  rounded-sm p-2 cursor-pointer"
                 onClick={handleTheme}
               >
                 <FontAwesomeIcon  icon={theme ? faSun : faMoon} className="w-5 h-5"/>
                 {themeName}
               </MenubarItem>
               <MenubarItem
-                className="flex w-full min-h-[28px] items-center gap-2 capitalize hover:bg-red-600 dark:hover:bg-red-700 focus:hover:bg-red-700 focus:text-white rounded-sm p-2"
+                className="flex w-full min-h-[28px] items-center gap-2 capitalize hover:bg-red-600 dark:hover:bg-red-700 focus:hover:bg-red-700 focus:text-white rounded-sm p-2 cursor-pointer"
                 onClick={ () => signOut({ callbackUrl: '/'})}
               >
                 <FontAwesomeIcon  icon={faPersonWalkingArrowRight} className="w-5 h-5"/>
