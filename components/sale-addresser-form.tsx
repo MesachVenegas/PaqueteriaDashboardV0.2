@@ -1,6 +1,7 @@
 'use client'
 
-import { useTransition, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -11,19 +12,22 @@ import { states } from '@/lib/constants';
 import { valueFormatter } from "@/lib/utils";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SaleFormProps } from '@/types/order.types';
 import { ClientProps } from '@/types/client.types';
 import { Textarea } from '@/components/ui/textarea';
+import { SaleFormProps } from '@/types/order.types';
+import { ProductProps } from '@/types/product.types';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { AddresserDataSchema } from '@/schema/order.schema';
 import { setClient } from '@/redux/features/sale-client.slice';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ProductProps } from '@/types/product.types';
 
 
 export default function SaleForm( { products } : SaleFormProps) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const userLogged = useCurrentUser();
   const [isPending, startTransition] = useTransition();
   const client = useAppSelector(state => state.client_select_to_sale);
   const form = useForm<z.infer<typeof AddresserDataSchema>>({
@@ -58,7 +62,7 @@ export default function SaleForm( { products } : SaleFormProps) {
 
   const handleForm = async ( data : z.infer<typeof AddresserDataSchema> ) => {
     startTransition( () => {
-      console.log(data);
+      console.log(data, userLogged?.id, client.id);
       // createNewProduct(data)
       //   .then( res => {
       //     form.reset();
@@ -198,7 +202,7 @@ export default function SaleForm( { products } : SaleFormProps) {
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder='Ej. Indios verdes'
+                        placeholder='Ej. Mexicali'
                         className="w-full md:max-w-[180px] bg-slate-300 dark:bg-slate-800"
                         type="text"
                         required
@@ -408,10 +412,7 @@ export default function SaleForm( { products } : SaleFormProps) {
               render={({field}) => (
                 <FormItem className='flex items-center justify-between gap-6'>
                   <FormLabel className='w-[150px]'>Paquete Seleccionado</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    required
-                  >
+                  <Select onValueChange={field.onChange} required >
                     <FormControl>
                       <SelectTrigger className="w-full max-w-md bg-slate-300 dark:bg-slate-800">
                         <SelectValue placeholder="Selecciona un paquete" className='placeholder:text-ellipsis'/>
@@ -422,7 +423,7 @@ export default function SaleForm( { products } : SaleFormProps) {
                         products.map( (product: ProductProps) => {
                           if(form.watch('delivery_type') === product.delivery_type){
                             return (
-                              <SelectItem key={product.id} value={String(product.cost)}>
+                              <SelectItem key={product.id} value={String(product.cost)}  >
                                 {product.name}
                               </SelectItem>
                             )
