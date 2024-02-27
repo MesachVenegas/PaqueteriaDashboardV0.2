@@ -21,7 +21,8 @@ export interface OrderCheckOutProps {
   pkg_height: string,
   pkg_width: string,
   pkg_weight: string,
-  delivery_type: 'land' | 'air',
   total: string,
+  delivery_type: 'land' | 'air',
+  payment_type: 'cash' | 'card' | 'transfer' | 'partial',
   product_selected: string
 }
